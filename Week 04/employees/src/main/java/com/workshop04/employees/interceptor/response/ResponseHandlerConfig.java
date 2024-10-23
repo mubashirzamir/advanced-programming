@@ -1,6 +1,7 @@
-package com.workshop04.employees.interceptor.response.handler;
+package com.workshop04.employees.interceptor.response;
 
-import com.workshop04.employees.interceptor.response.GlobalResponseInterceptor;
+import com.workshop04.employees.interceptor.response.handler.IResponseHandler;
+import com.workshop04.employees.interceptor.response.handler.NotFound;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,7 +12,7 @@ public class ResponseHandlerConfig {
 
     @Bean
     public List<IResponseHandler> responseHandlers() {
-        return List.of(new NotFound(), new NoContent());
+        return List.of(new NotFound());
     }
 
     @Bean
