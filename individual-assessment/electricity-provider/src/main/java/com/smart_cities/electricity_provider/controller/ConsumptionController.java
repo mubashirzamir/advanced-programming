@@ -29,14 +29,14 @@ public class ConsumptionController {
     }
 
     @PostMapping("/consumptions")
-    public ResponseEntity<Consumption> createConsumption(@RequestBody Consumption updatedConsumption) {
-        Consumption consumption = this.consumptionRepository.save(updatedConsumption);
+    public ResponseEntity<Consumption> createConsumption(@RequestBody Consumption newConsumption) {
+        Consumption consumption = this.consumptionRepository.save(newConsumption);
         return new ResponseEntity<>(consumption, HttpStatus.CREATED);
     }
 
     @PutMapping("/consumptions/{id}")
-    public ResponseEntity<Void> updateElectricityConsumption(@PathVariable Long id,
-                                                             @RequestBody Consumption updatedConsumption) {
+    public ResponseEntity<Void> updateConsumption(@PathVariable Long id,
+                                                  @RequestBody Consumption updatedConsumption) {
         return this.consumptionRepository.findById(id)
                 .map(consumption -> {
                     consumption.setConsumption(updatedConsumption.getConsumption());
@@ -49,7 +49,7 @@ public class ConsumptionController {
     }
 
     @DeleteMapping("/consumptions/{id}")
-    public ResponseEntity<Void> deleteElectricityConsumption(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteConsumption(@PathVariable Long id) {
         return this.consumptionRepository.findById(id)
                 .map(consumption -> {
                     this.consumptionRepository.delete(consumption);
