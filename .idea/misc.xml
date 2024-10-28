@@ -8,6 +8,9 @@
         <option value="$PROJECT_DIR$/individual-assessment/eureka-server/pom.xml" />
         <option value="$PROJECT_DIR$/individual-assessment/electricity-provider/pom.xml" />
         <option value="$PROJECT_DIR$/individual-assessment/smart-city/pom.xml" />
+        <option value="$PROJECT_DIR$/formative-feedback-01/customer-management/pom.xml" />
+        <option value="$PROJECT_DIR$/formative-feedback-01/shipment-management/pom.xml" />
+        <option value="$PROJECT_DIR$/individual-assessment/citizen/pom.xml" />
       </list>
     </option>
   </component>

@@ -6,18 +6,24 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="citizen" />
+        <module name="customer-management" />
+        <module name="electricity-provider" />
         <module name="smart-city" />
+        <module name="shipment-management" />
         <module name="employees" />
         <module name="eureka-server" />
-        <module name="electricity-provider" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="citizen" options="-parameters" />
+      <module name="customer-management" options="-parameters" />
       <module name="electricity-provider" options="-parameters" />
       <module name="employees" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
+      <module name="shipment-management" options="-parameters" />
       <module name="smart-city" options="-parameters" />
     </option>
   </component>
