@@ -7,16 +7,17 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="users_mysql" />
-        <module name="citizen" />
-        <module name="customer-management" />
-        <module name="electricity-provider" />
-        <module name="smart-city" />
-        <module name="shipment-management" />
+        <module name="provider" />
         <module name="employees" />
-        <module name="eureka-server" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="citizen" target="17" />
+      <module name="customer-management" target="17" />
+      <module name="electricity-provider" target="17" />
+      <module name="eureka-server" target="17" />
+      <module name="shipment-management" target="17" />
+      <module name="smart-city" target="17" />
       <module name="users-mysql" target="17" />
     </bytecodeTargetLevel>
   </component>
@@ -27,6 +28,7 @@
       <module name="electricity-provider" options="-parameters" />
       <module name="employees" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
+      <module name="provider" options="-parameters" />
       <module name="shipment-management" options="-parameters" />
       <module name="smart-city" options="-parameters" />
       <module name="users-mysql" options="-parameters" />
