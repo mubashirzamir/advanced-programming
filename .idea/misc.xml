@@ -11,7 +11,14 @@
         <option value="$PROJECT_DIR$/formative-feedback-01/customer-management/pom.xml" />
         <option value="$PROJECT_DIR$/formative-feedback-01/shipment-management/pom.xml" />
         <option value="$PROJECT_DIR$/individual-assessment/citizen/pom.xml" />
+        <option value="$PROJECT_DIR$/Week 05/users-mysql/pom.xml" />
+        <option value="$PROJECT_DIR$/Week 05/users_mysql/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/Week 05/users-mysql/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_23" default="true" project-jdk-name="openjdk-23" project-jdk-type="JavaSDK">
