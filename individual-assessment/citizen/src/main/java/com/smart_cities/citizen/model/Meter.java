@@ -1,5 +1,6 @@
 package com.smart_cities.citizen.model;
 
+import com.smart_cities.citizen.GeneratesReadings;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -7,7 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-public class Meter {
+public class Meter implements GeneratesReadings {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
