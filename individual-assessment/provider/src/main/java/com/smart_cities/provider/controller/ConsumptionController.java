@@ -30,6 +30,7 @@ public class ConsumptionController {
 
     @PostMapping("/consumptions")
     public ResponseEntity<Consumption> createConsumption(@RequestBody Consumption newConsumption) {
+        System.out.println("Receiving");
         Consumption consumption = this.consumptionRepository.save(newConsumption);
         return new ResponseEntity<>(consumption, HttpStatus.CREATED);
     }
