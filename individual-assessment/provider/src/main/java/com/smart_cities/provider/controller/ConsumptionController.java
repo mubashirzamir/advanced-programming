@@ -2,6 +2,8 @@ package com.smart_cities.provider.controller;
 
 import com.smart_cities.provider.model.Consumption;
 import com.smart_cities.provider.repository.ConsumptionRepository;
+import com.smart_cities.provider.service.CityNotifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,8 +14,14 @@ import java.util.List;
 public class ConsumptionController {
     private final ConsumptionRepository consumptionRepository;
 
-    public ConsumptionController(ConsumptionRepository consumptionRepository) {
+    private final CityNotifier cityNotifier;
+
+    @Value("${provider_id}")
+    private Long providerId;
+
+    public ConsumptionController(ConsumptionRepository consumptionRepository, CityNotifier cityNotifier) {
         this.consumptionRepository = consumptionRepository;
+        this.cityNotifier = cityNotifier;
     }
 
     @GetMapping("/consumptions")
@@ -30,7 +38,9 @@ public class ConsumptionController {
 
     @PostMapping("/consumptions")
     public ResponseEntity<Consumption> createConsumption(@RequestBody Consumption newConsumption) {
+        newConsumption.setProviderId(providerId);
         Consumption consumption = this.consumptionRepository.save(newConsumption);
+        this.cityNotifier.notify(consumption);
         return new ResponseEntity<>(consumption, HttpStatus.CREATED);
     }
 
@@ -39,9 +49,10 @@ public class ConsumptionController {
                                                   @RequestBody Consumption updatedConsumption) {
         return this.consumptionRepository.findById(id)
                 .map(consumption -> {
-                    consumption.setConsumption(updatedConsumption.getConsumption());
                     consumption.setCitizenId(updatedConsumption.getCitizenId());
                     consumption.setMeterId(updatedConsumption.getMeterId());
+                    consumption.setConsumption(updatedConsumption.getConsumption());
+                    consumption.setGeneratedAt(updatedConsumption.getGeneratedAt());
                     this.consumptionRepository.save(consumption);
                     return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
                 })

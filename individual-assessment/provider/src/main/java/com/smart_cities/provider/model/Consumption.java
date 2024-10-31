@@ -1,10 +1,12 @@
 package com.smart_cities.provider.model;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.PositiveOrZero;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDateTime;
 
@@ -26,22 +28,20 @@ public class Consumption {
     @PositiveOrZero
     private int consumption;
 
-    @CreationTimestamp
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
-
-    @UpdateTimestamp
     @Column(nullable = false)
-    private LocalDateTime updatedAt;
+    private LocalDateTime generatedAt;
+
+    private Long providerId;
 
     public Consumption() {
 
     }
 
-    public Consumption(Long meterId, Long citizenId, int consumption) {
+    public Consumption(Long meterId, Long citizenId, int consumption, LocalDateTime generatedAt) {
         this.citizenId = citizenId;
         this.meterId = meterId;
         this.consumption = consumption;
+        this.generatedAt = generatedAt;
     }
 
     public Long getId() {
@@ -72,16 +72,20 @@ public class Consumption {
         this.consumption = consumption;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return this.createdAt;
+    public Long getProviderId() {
+        return this.providerId;
     }
 
-    public LocalDateTime getUpdatedAt() {
-        return this.updatedAt;
+    public void setProviderId(Long providerId) {
+        this.providerId = providerId;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
+    public LocalDateTime getGeneratedAt() {
+        return this.generatedAt;
+    }
+
+    public void setGeneratedAt(LocalDateTime generatedAt) {
+        this.generatedAt = generatedAt;
     }
 
     @AssertTrue(message = "Either citizen ID or meter ID must be provided.")
@@ -95,5 +99,16 @@ public class Consumption {
         }
 
         return true;
+    }
+
+    @Override
+    public String toString() {
+        try {
+            ObjectMapper om = new ObjectMapper();
+            om.registerModule(new JavaTimeModule());
+            return om.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
