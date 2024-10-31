@@ -1,4 +1,4 @@
-package com.smart_cities.citizen.services;
+package com.smart_cities.citizen.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;

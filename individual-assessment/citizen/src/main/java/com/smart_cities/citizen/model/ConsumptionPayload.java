@@ -1,4 +1,4 @@
-package com.smart_cities.citizen.services;
+package com.smart_cities.citizen.model;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,5 +1,6 @@
-package com.smart_cities.citizen.services;
+package com.smart_cities.citizen.service;
 
+import com.smart_cities.citizen.model.ConsumptionPayload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
