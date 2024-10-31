@@ -30,6 +30,7 @@ public class Consumption {
     @Column(nullable = false)
     private LocalDateTime generatedAt;
 
+    @Transient
     private Long providerId;
 
     public Consumption() {
