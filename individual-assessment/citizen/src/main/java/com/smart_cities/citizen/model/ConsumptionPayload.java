@@ -10,13 +10,13 @@ public class ConsumptionPayload {
     private Long citizenId;
     private Long meterId;
     private int consumption;
-    private LocalDateTime timestamp;
+    private LocalDateTime generatedAt;
 
-    public ConsumptionPayload(Long citizenId, Long meterId, int consumption, LocalDateTime timestamp) {
+    public ConsumptionPayload(Long citizenId, Long meterId, int consumption, LocalDateTime generatedAt) {
         this.citizenId = citizenId;
         this.meterId = meterId;
         this.consumption = consumption;
-        this.timestamp = timestamp;
+        this.generatedAt = generatedAt;
     }
 
     public Long getCitizenId() {
@@ -43,12 +43,12 @@ public class ConsumptionPayload {
         this.consumption = consumption;
     }
 
-    public LocalDateTime getTimestamp() {
-        return timestamp;
+    public LocalDateTime getGeneratedAt() {
+        return generatedAt;
     }
 
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
+    public void setGeneratedAt(LocalDateTime generatedAt) {
+        this.generatedAt = generatedAt;
     }
 
     @Override
