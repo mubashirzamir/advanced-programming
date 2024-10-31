@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Service
 public class NotifyProvider {
     @Value("${provider_name}")
-    private static String providerName;
+    private String providerName;
 
     @Value("${citizen_id}")
     private Long citizenId;
