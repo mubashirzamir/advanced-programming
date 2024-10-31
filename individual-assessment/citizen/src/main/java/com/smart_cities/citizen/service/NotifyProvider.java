@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 
 @Service
 public class NotifyProvider {
-    @Value("${provider_name}")
-    private String providerName;
+    @Value("${provider_id}")
+    private String providerId;
 
     @Value("${citizen_id}")
     private Long citizenId;
