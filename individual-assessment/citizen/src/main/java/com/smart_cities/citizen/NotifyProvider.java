@@ -39,7 +39,8 @@ public class NotifyProvider {
     public Long getMeterId() {
         return meterId;
     }
-    
+
+    @Async
     public void notify(int consumption) {
         ConsumptionPayload consumptionPayload = new ConsumptionPayload(
                 this.getCitizenId(),
@@ -48,6 +49,8 @@ public class NotifyProvider {
                 LocalDateTime.now()
         );
 
-        this.restTemplate.postForObject(PROVIDER_URL, consumptionPayload, String.class);
+        NotifyProvider.logger.info("Generated: " + consumptionPayload);
+        Object response = this.restTemplate.postForObject(PROVIDER_URL, consumptionPayload, String.class);
+        NotifyProvider.logger.info("Provider Response: " + response.toString());
     }
 }
