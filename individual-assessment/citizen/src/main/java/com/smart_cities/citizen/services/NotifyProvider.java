@@ -1,4 +1,4 @@
-package com.smart_cities.citizen;
+package com.smart_cities.citizen.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
