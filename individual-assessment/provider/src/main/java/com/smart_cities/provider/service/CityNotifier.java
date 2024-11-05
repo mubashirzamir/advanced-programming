@@ -11,7 +11,7 @@ import java.util.Map;
 
 @Service
 public class CityNotifier {
-    private static final String CITY_URL = "https://httpbin.org/post";
+    private static final String CITY_URL = "http://localhost:8080/consumptions";
 
     private final RestTemplate restTemplate;
 
