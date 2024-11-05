@@ -3,11 +3,14 @@ package com.smart_cities.provider.model;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.smart_cities.provider.entity.Provider;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.PositiveOrZero;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity
 @Table(name = "consumptions")
@@ -21,7 +24,7 @@ public class Consumption {
     private Long citizenId;
 
     @Column()
-    private Long meterId;
+    private Long smartMeterId;
 
     @Column(nullable = false)
     @PositiveOrZero
@@ -31,29 +34,21 @@ public class Consumption {
     private LocalDateTime generatedAt;
 
     @Transient
-    private Long providerId;
+    private Provider provider;
 
     public Consumption() {
 
     }
 
-    public Consumption(Long meterId, Long citizenId, int consumption, LocalDateTime generatedAt) {
+    public Consumption(Long citizenId, Long smartMeterId, int consumption, LocalDateTime generatedAt) {
         this.citizenId = citizenId;
-        this.meterId = meterId;
+        this.smartMeterId = smartMeterId;
         this.consumption = consumption;
         this.generatedAt = generatedAt;
     }
 
     public Long getId() {
         return this.id;
-    }
-
-    public Long getMeterId() {
-        return this.meterId;
-    }
-
-    public void setMeterId(Long meterId) {
-        this.meterId = meterId;
     }
 
     public Long getCitizenId() {
@@ -64,6 +59,14 @@ public class Consumption {
         this.citizenId = citizenId;
     }
 
+    public Long getSmartMeterId() {
+        return this.smartMeterId;
+    }
+
+    public void setSmartMeterId(Long smartMeterId) {
+        this.smartMeterId = smartMeterId;
+    }
+
     public int getConsumption() {
         return this.consumption;
     }
@@ -72,12 +75,12 @@ public class Consumption {
         this.consumption = consumption;
     }
 
-    public Long getProviderId() {
-        return this.providerId;
+    public Provider getProvider() {
+        return this.provider;
     }
 
-    public void setProviderId(Long providerId) {
-        this.providerId = providerId;
+    public void setProvider(Provider provider) {
+        this.provider = provider;
     }
 
     public LocalDateTime getGeneratedAt() {
@@ -90,11 +93,12 @@ public class Consumption {
 
     @AssertTrue(message = "Either citizen ID or meter ID must be provided.")
     private boolean isCitizenIdCorrect() {
-        if (this.citizenId == null && this.meterId == null) {
+        System.out.println(this.toString());
+        if (this.citizenId == null && this.smartMeterId == null) {
             return false;
         }
 
-        if (this.citizenId != null && this.meterId != null) {
+        if (this.citizenId != null && this.smartMeterId != null) {
             return false;
         }
 
@@ -110,5 +114,18 @@ public class Consumption {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Map<String, Object> toPostPayload() {
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("id", this.getId());
+        map.put("provider_id", this.getProvider().getId());
+        map.put("citizen_id", this.getCitizenId());
+        map.put("smart_meter_id", this.getSmartMeterId());
+        map.put("consumption", this.getConsumption());
+        map.put("generatedAt", this.getGeneratedAt());
+
+        return map;
     }
 }

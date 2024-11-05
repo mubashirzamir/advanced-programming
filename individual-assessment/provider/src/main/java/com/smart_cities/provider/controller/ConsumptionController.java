@@ -1,9 +1,9 @@
 package com.smart_cities.provider.controller;
 
+import com.smart_cities.provider.entity.Provider;
 import com.smart_cities.provider.model.Consumption;
 import com.smart_cities.provider.repository.ConsumptionRepository;
 import com.smart_cities.provider.service.CityNotifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,11 +16,13 @@ public class ConsumptionController {
 
     private final CityNotifier cityNotifier;
 
-    @Value("${provider_id}")
-    private Long providerId;
+    private final Provider provider;
 
-    public ConsumptionController(ConsumptionRepository consumptionRepository, CityNotifier cityNotifier) {
+    public ConsumptionController(ConsumptionRepository consumptionRepository,
+                                 Provider provider,
+                                 CityNotifier cityNotifier) {
         this.consumptionRepository = consumptionRepository;
+        this.provider = provider;
         this.cityNotifier = cityNotifier;
     }
 
@@ -38,9 +40,10 @@ public class ConsumptionController {
 
     @PostMapping("/consumptions")
     public ResponseEntity<Consumption> createConsumption(@RequestBody Consumption newConsumption) {
-        newConsumption.setProviderId(providerId);
+        newConsumption.setProvider(this.provider);
         Consumption consumption = this.consumptionRepository.save(newConsumption);
-        this.cityNotifier.notify(consumption);
+        this.cityNotifier.notify(consumption.toPostPayload());
+
         return new ResponseEntity<>(consumption, HttpStatus.CREATED);
     }
 
@@ -50,7 +53,7 @@ public class ConsumptionController {
         return this.consumptionRepository.findById(id)
                 .map(consumption -> {
                     consumption.setCitizenId(updatedConsumption.getCitizenId());
-                    consumption.setMeterId(updatedConsumption.getMeterId());
+                    consumption.setSmartMeterId(updatedConsumption.getSmartMeterId());
                     consumption.setConsumption(updatedConsumption.getConsumption());
                     consumption.setGeneratedAt(updatedConsumption.getGeneratedAt());
                     this.consumptionRepository.save(consumption);
