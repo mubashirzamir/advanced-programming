@@ -5,38 +5,40 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Consumption {
-    private Long citizenId;
-    private Long meterId;
+    private Long id;
+    private String type;
     private int consumption;
     private LocalDateTime generatedAt;
 
-    public Consumption(Long citizenId, Long meterId, int consumption, LocalDateTime generatedAt) {
-        this.citizenId = citizenId;
-        this.meterId = meterId;
+    public Consumption(Long id, String type, int consumption, LocalDateTime generatedAt) {
+        this.id = id;
+        this.type = type;
         this.consumption = consumption;
         this.generatedAt = generatedAt;
     }
 
-    public Long getCitizenId() {
-        return this.citizenId;
+    public Long getId() {
+        return this.id;
     }
 
-    public void setCitizenId(Long citizenId) {
-        this.citizenId = citizenId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public Long getMeterId() {
-        return this.meterId;
+    public String getType() {
+        return this.type;
     }
 
-    public void setMeterId(Long meterId) {
-        this.meterId = meterId;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public int getConsumption() {
-        return consumption;
+        return this.consumption;
     }
 
     public void setConsumption(int consumption) {
@@ -49,6 +51,15 @@ public class Consumption {
 
     public void setGeneratedAt(LocalDateTime generatedAt) {
         this.generatedAt = generatedAt;
+    }
+
+    public Map<String, Object> toPostPayload() {
+        Map<String, Object> map = new HashMap<>();
+        map.put(type + "_id", this.id);
+        map.put("consumption", this.consumption);
+        map.put("generatedAt", this.generatedAt);
+
+        return map;
     }
 
     @Override

@@ -7,7 +7,19 @@ import java.util.Random;
 public class ConsumptionGenerator implements GenerateBehavior {
     private final Random random = new Random();
 
-    public int generate(int lastGeneratedNumber) {
-        return this.random.nextInt(lastGeneratedNumber, lastGeneratedNumber + 100);
+    private int currentNumber = 0;
+
+    public int getCurrentNumber() {
+        return this.currentNumber;
+    }
+
+    public void setCurrentNumber(int currentNumber) {
+        this.currentNumber = currentNumber;
+    }
+
+    public int generate() {
+        this.setCurrentNumber(this.random.nextInt(this.currentNumber, this.currentNumber + 100));
+
+        return getCurrentNumber();
     }
 }

@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Citizen implements GeneratesReadings {
-    @Value("${citizen_id}")
-    private Long citizenId;
+    @Value("${id}")
+    private Long id;
 
     GenerateBehavior generateBehavior;
 
@@ -17,15 +17,19 @@ public class Citizen implements GeneratesReadings {
         this.generateBehavior = new ConsumptionGenerator();
     }
 
-    public Long getCitizenId() {
-        return citizenId;
+    public Long getId() {
+        return id;
     }
 
-    public void setCitizenId(Long citizenId) {
-        this.citizenId = citizenId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public int generateReading(int lastGeneratedNumber) {
-        return generateBehavior.generate(lastGeneratedNumber);
+    public String getType() {
+        return "citizen";
+    }
+
+    public int generateReading() {
+        return generateBehavior.generate();
     }
 }
