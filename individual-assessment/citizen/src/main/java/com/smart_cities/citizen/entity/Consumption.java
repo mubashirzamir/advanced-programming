@@ -1,4 +1,4 @@
-package com.smart_cities.citizen.model;
+package com.smart_cities.citizen.entity;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,13 +6,13 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.time.LocalDateTime;
 
-public class ConsumptionPayload {
+public class Consumption {
     private Long citizenId;
     private Long meterId;
     private int consumption;
     private LocalDateTime generatedAt;
 
-    public ConsumptionPayload(Long citizenId, Long meterId, int consumption, LocalDateTime generatedAt) {
+    public Consumption(Long citizenId, Long meterId, int consumption, LocalDateTime generatedAt) {
         this.citizenId = citizenId;
         this.meterId = meterId;
         this.consumption = consumption;

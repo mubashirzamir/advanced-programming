@@ -1,11 +1,10 @@
-package com.smart_cities.citizen;
+package com.smart_cities.citizen.config;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
-@Configuration
-public class AppConfig {
+@org.springframework.context.annotation.Configuration
+public class ApplicationConfiguration {
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();

@@ -1,27 +1,15 @@
 package com.smart_cities.citizen.service;
 
-import com.smart_cities.citizen.model.ConsumptionPayload;
+import com.smart_cities.citizen.entity.Consumption;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.time.LocalDateTime;
-
 @Service
 public class NotifyProvider {
-    @Value("${provider_id}")
-    private String providerId;
-
-    @Value("${citizen_id}")
-    private Long citizenId;
-
-    @Value("${meter_id}")
-    private Long meterId;
-
     private static final String PROVIDER_URL = "http://localhost:8082/" + "/consumptions";
 
     private final RestTemplate restTemplate;
@@ -33,25 +21,10 @@ public class NotifyProvider {
         this.restTemplate = restTemplate;
     }
 
-    public Long getCitizenId() {
-        return citizenId;
-    }
-
-    public Long getMeterId() {
-        return meterId;
-    }
-
     @Async
-    public void notify(int consumption) {
-        ConsumptionPayload consumptionPayload = new ConsumptionPayload(
-                this.getCitizenId(),
-                this.getMeterId(),
-                consumption,
-                LocalDateTime.now()
-        );
-
-        NotifyProvider.logger.info("Generated: " + consumptionPayload);
-        Object response = this.restTemplate.postForObject(PROVIDER_URL, consumptionPayload, String.class);
+    public void notify(Consumption consumption) {
+        NotifyProvider.logger.info("Generated: " + consumption);
+        Object response = this.restTemplate.postForObject(PROVIDER_URL, consumption, String.class);
         NotifyProvider.logger.info("Provider Response: " + response.toString());
     }
 }
