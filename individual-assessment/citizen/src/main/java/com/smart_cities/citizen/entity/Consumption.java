@@ -56,7 +56,7 @@ public class Consumption {
     public Map<String, Object> toPostPayload() {
         Map<String, Object> map = new HashMap<>();
 
-        map.put(this.getType() + "_id", this.getId());
+        map.put(this.getType() + "Id", this.getId());
         map.put("consumption", this.getConsumption());
         map.put("generatedAt", this.getGeneratedAt());
 

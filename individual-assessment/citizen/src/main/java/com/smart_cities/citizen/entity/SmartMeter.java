@@ -26,7 +26,7 @@ public class SmartMeter implements GeneratesReadings {
     }
 
     public String getType() {
-        return "smart_meter";
+        return "smartMeter";
     }
 
     public int generateReading() {
