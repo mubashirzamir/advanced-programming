@@ -3,15 +3,18 @@ package com.smart_cities.citizen.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
 
 @Service
 public class ProviderNotifier {
-    private static final String PROVIDER_URL = "http://localhost:8082/" + "/consumptions";
+    @Value("${provider_uri}")
+    private String providerUrl;
 
     private final RestTemplate restTemplate;
 
@@ -24,8 +27,12 @@ public class ProviderNotifier {
 
     @Async
     public void notify(Map<String, Object> consumption) {
-        ProviderNotifier.logger.info("Generated: " + consumption);
-        Object response = this.restTemplate.postForObject(PROVIDER_URL, consumption, String.class);
-        ProviderNotifier.logger.info("Provider Response: " + response.toString());
+        try {
+            ProviderNotifier.logger.info(this.providerUrl + " Generated: " + consumption);
+            Object response = this.restTemplate.postForObject(this.providerUrl, consumption, String.class);
+            ProviderNotifier.logger.info("Provider Response: " + response.toString());
+        } catch (Exception e) {
+            ProviderNotifier.logger.error(e.getMessage());
+        }
     }
 }
