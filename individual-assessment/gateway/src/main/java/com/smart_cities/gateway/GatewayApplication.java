@@ -1,14 +1,21 @@
 package com.smart_cities.gateway;
 
+import com.smart_cities.gateway.config.UriConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.gateway.route.RouteLocator;
+import org.springframework.cloud.gateway.route.builder.GatewayFilterSpec;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
+import org.springframework.cloud.gateway.route.builder.UriSpec;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.function.Function;
+
 @SpringBootApplication
 @RestController
+@EnableConfigurationProperties(UriConfiguration.class)
 public class GatewayApplication {
 
     public static void main(String[] args) {
@@ -16,24 +23,30 @@ public class GatewayApplication {
     }
 
     @Bean
-    public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
+    public RouteLocator customRouteLocator(RouteLocatorBuilder builder, UriConfiguration uriConfiguration) {
         return builder.routes()
                 .route("city-routes", r -> r
                         .path("/city/**")
                         .filters(f -> f.prefixPath("/api"))
-                        .uri(System.getenv().getOrDefault("CITY_ROUTE_URI", "http://localhost:9080")))
+                        .uri(uriConfiguration.getCity()))
                 .route("provider-01-routes", r -> r
                         .path("/provider/1/**")
-                        .filters(f -> f.stripPrefix(2))
-                        .uri(System.getenv().getOrDefault("PROVIDER_01_ROUTE_URI", "http://localhost:9081")))
+                        .filters(GatewayApplication.applyDefaultRouteFilters())
+                        .uri(uriConfiguration.getProvider01()))
                 .route("provider-02-routes", r -> r
                         .path("/provider/2/**")
-                        .filters(f -> f.stripPrefix(2))
-                        .uri(System.getenv().getOrDefault("PROVIDER_02_ROUTE_URI", "http://localhost:9082")))
+                        .filters(GatewayApplication.applyDefaultRouteFilters())
+                        .uri(uriConfiguration.getProvider02()))
                 .route("provider-03-routes", r -> r
                         .path("/provider/3/**")
-                        .filters(f -> f.stripPrefix(2))
-                        .uri(System.getenv().getOrDefault("PROVIDER_03_ROUTE_URI", "http://localhost:9083")))
+                        .filters(GatewayApplication.applyDefaultRouteFilters())
+                        .uri(uriConfiguration.getProvider03()))
                 .build();
+    }
+
+
+    public static Function<GatewayFilterSpec, UriSpec> applyDefaultRouteFilters() {
+        return f -> f.stripPrefix(2)
+                .circuitBreaker((config -> config.setFallbackUri("forward:/fallback")));
     }
 }
