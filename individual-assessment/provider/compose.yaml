@@ -1,4 +1,6 @@
 services:
+  application:
+      build: .
   postgres:
     image: 'postgres:latest'
     environment:

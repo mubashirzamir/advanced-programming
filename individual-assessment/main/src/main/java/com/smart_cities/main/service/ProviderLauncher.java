@@ -9,7 +9,7 @@ import java.io.IOException;
 public class ProviderLauncher implements Launcher {
     @Override
     public void launch() {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 1; i++) {
             ProviderLauncher.launch(i, String.valueOf(9081 + i));
         }
     }
