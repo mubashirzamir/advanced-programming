@@ -1,16 +1,15 @@
 package com.smart_cities.citizen.scheduler;
 
 import com.smart_cities.citizen.model.Meter;
-import com.smart_cities.citizen.dto.Reading;
 import com.smart_cities.citizen.repository.MeterRepository;
 import com.smart_cities.citizen.service.ProviderNotifier;
+import com.smart_cities.citizen.service.ReadingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +17,7 @@ import java.util.List;
 public class MeterReadingScheduler {
     private final ProviderNotifier providerNotifier;
     private final MeterRepository meterRepository;
+    private final ReadingService readingService;
     private List<Meter> meters = new ArrayList<>();
 
     public List<Meter> getMeters() {
@@ -29,9 +29,12 @@ public class MeterReadingScheduler {
     }
 
     @Autowired
-    public MeterReadingScheduler(ProviderNotifier providerNotifier, MeterRepository meterRepository) {
+    public MeterReadingScheduler(ProviderNotifier providerNotifier,
+                                 MeterRepository meterRepository,
+                                 ReadingService readingService) {
         this.providerNotifier = providerNotifier;
         this.meterRepository = meterRepository;
+        this.readingService = readingService;
         this.init();
     }
 
@@ -43,12 +46,10 @@ public class MeterReadingScheduler {
     @Scheduled(fixedRate = 5000)
     public void generateAndNotify() {
         for (Meter meter : this.getMeters()) {
-            this.providerNotifier.notify(new Reading(
-                    meter.getId(),
-                    meter.getType(),
-                    meter.generateReading(),
-                    LocalDateTime.now()
-            ).toPostPayload(), meter.getProviderId());
+            this.providerNotifier.notify(
+                    this.readingService.createReading(meter).toPostPayload(),
+                    meter.getProviderId()
+            );
         }
     }
 }

@@ -1,13 +1,11 @@
 package com.smart_cities.citizen.model;
 
-import com.smart_cities.citizen.contracts.GenerateBehavior;
-import com.smart_cities.citizen.contracts.GeneratesReadings;
-import com.smart_cities.citizen.service.ReadingGenerator;
+import com.smart_cities.citizen.contracts.IsAbleToCreateReadings;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "citizens")
-public class Citizen implements GeneratesReadings {
+public class Citizen implements IsAbleToCreateReadings {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -15,17 +13,11 @@ public class Citizen implements GeneratesReadings {
     @Column()
     private Long providerId;
 
-    @Transient
-    GenerateBehavior generateBehavior;
-
     public Citizen() {
-        this.generateBehavior = new ReadingGenerator();
-        this.generateBehavior.setCurrentNumber(0L);
     }
 
     public Citizen(Long providerId) {
         this.providerId = providerId;
-        this.generateBehavior = new ReadingGenerator();
     }
 
     public Long getId() {
@@ -46,9 +38,5 @@ public class Citizen implements GeneratesReadings {
 
     public String getType() {
         return "citizen";
-    }
-
-    public Long generateReading() {
-        return this.generateBehavior.generate();
     }
 }

@@ -1,25 +1,43 @@
-package com.smart_cities.citizen.dto;
+package com.smart_cities.citizen.model;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+@Entity
 public class Reading {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String type;
+
+    @Column
+    private Long entityId;
+
+    @Column
+    private String entityType;
+
+    @Column
     private Long consumption;
+
+    @Column
     private LocalDateTime generatedAt;
 
-    public Reading(Long id, String type, Long consumption, LocalDateTime generatedAt) {
-        this.id = id;
-        this.type = type;
+    public Reading() {
+
+    }
+
+    public Reading(Long entityId, String entityType, Long consumption, LocalDateTime generatedAt) {
+        this.entityId = entityId;
+        this.entityType = entityType;
         this.consumption = consumption;
         this.generatedAt = generatedAt;
     }
+
 
     public Long getId() {
         return this.id;
@@ -29,12 +47,20 @@ public class Reading {
         this.id = id;
     }
 
-    public String getType() {
-        return this.type;
+    public Long getEntityId() {
+        return this.entityId;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setEntityId(Long entityId) {
+        this.entityId = entityId;
+    }
+
+    public String getEntityType() {
+        return this.entityType;
+    }
+
+    public void setEntityType(String entityType) {
+        this.entityType = entityType;
     }
 
     public Long getConsumption() {
@@ -56,7 +82,9 @@ public class Reading {
     public Map<String, Object> toPostPayload() {
         Map<String, Object> map = new HashMap<>();
 
-        map.put(this.getType() + "Id", this.getId());
+        map.put("entityId", this.getEntityId());
+        map.put("entityType", this.getEntityType());
+        map.put("consumption", this.getConsumption());
         map.put("generatedAt", this.getGeneratedAt());
 
         return map;
