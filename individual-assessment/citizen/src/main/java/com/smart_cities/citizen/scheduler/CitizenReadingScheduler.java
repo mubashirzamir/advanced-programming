@@ -35,6 +35,7 @@ public class CitizenReadingScheduler {
         this.providerNotifier = providerNotifier;
         this.citizenRepository = citizenRepository;
         this.readingService = readingService;
+        this.init();
     }
 
     @EventListener(ApplicationReadyEvent.class)
