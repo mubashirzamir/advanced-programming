@@ -4,7 +4,7 @@ import com.smart_cities.citizen.contracts.GenerateBehavior;
 
 import java.util.Random;
 
-public class ConsumptionGenerator implements GenerateBehavior {
+public class ReadingGenerator implements GenerateBehavior {
     private final Random random = new Random();
 
     private int currentNumber = 0;

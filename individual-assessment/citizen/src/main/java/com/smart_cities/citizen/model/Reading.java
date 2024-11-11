@@ -1,4 +1,4 @@
-package com.smart_cities.citizen.entity;
+package com.smart_cities.citizen.model;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,16 +8,16 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Consumption {
+public class Reading {
     private Long id;
     private String type;
-    private int consumption;
+    private int reading;
     private LocalDateTime generatedAt;
 
-    public Consumption(Long id, String type, int consumption, LocalDateTime generatedAt) {
+    public Reading(Long id, String type, int reading, LocalDateTime generatedAt) {
         this.id = id;
         this.type = type;
-        this.consumption = consumption;
+        this.reading = reading;
         this.generatedAt = generatedAt;
     }
 
@@ -37,12 +37,12 @@ public class Consumption {
         this.type = type;
     }
 
-    public int getConsumption() {
-        return this.consumption;
+    public int getReading() {
+        return this.reading;
     }
 
-    public void setConsumption(int consumption) {
-        this.consumption = consumption;
+    public void setReading(int reading) {
+        this.reading = reading;
     }
 
     public LocalDateTime getGeneratedAt() {
@@ -57,7 +57,7 @@ public class Consumption {
         Map<String, Object> map = new HashMap<>();
 
         map.put(this.getType() + "Id", this.getId());
-        map.put("consumption", this.getConsumption());
+        map.put("reading", this.getReading());
         map.put("generatedAt", this.getGeneratedAt());
 
         return map;
