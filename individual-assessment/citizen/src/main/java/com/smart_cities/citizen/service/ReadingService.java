@@ -18,7 +18,8 @@ public class ReadingService {
     }
 
     public Reading getReading(Long entityId, String entityType) {
-        return this.readingRepository.findByEntityIdAndEntityType(entityId, entityType).orElse(null);
+        return this.readingRepository.findFirstByEntityIdAndEntityTypeOrderByGeneratedAtDesc(entityId, entityType)
+                .orElse(null);
     }
 
     public Reading createReading(IsAbleToCreateReadings entity) {
