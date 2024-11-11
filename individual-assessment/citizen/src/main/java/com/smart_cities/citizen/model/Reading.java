@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Entity
+@Table(name = "readings")
 public class Reading {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
