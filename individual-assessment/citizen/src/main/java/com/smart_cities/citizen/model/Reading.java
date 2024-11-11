@@ -57,7 +57,7 @@ public class Reading {
         Map<String, Object> map = new HashMap<>();
 
         map.put(this.getType() + "Id", this.getId());
-        map.put("reading", this.getReading());
+        map.put("consumption", this.getReading());
         map.put("generatedAt", this.getGeneratedAt());
 
         return map;

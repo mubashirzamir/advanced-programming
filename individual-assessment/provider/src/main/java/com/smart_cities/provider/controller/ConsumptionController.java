@@ -3,7 +3,6 @@ package com.smart_cities.provider.controller;
 import com.smart_cities.provider.entity.Provider;
 import com.smart_cities.provider.model.Consumption;
 import com.smart_cities.provider.repository.ConsumptionRepository;
-import com.smart_cities.provider.service.CityNotifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +15,7 @@ public class ConsumptionController {
 
     private final Provider provider;
 
-    public ConsumptionController(ConsumptionRepository consumptionRepository,
-                                 Provider provider,
-                                 CityNotifier cityNotifier) {
+    public ConsumptionController(ConsumptionRepository consumptionRepository, Provider provider) {
         this.consumptionRepository = consumptionRepository;
         this.provider = provider;
     }

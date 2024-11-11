@@ -23,7 +23,7 @@ public class ProviderNotifier {
     @Async
     public void notify(Map<String, Object> reading, Long providerId) {
         try {
-            String providerUrl = "https://localhost:8080/provider" + "/" + providerId + "/consumptions";
+            String providerUrl = "http://localhost:8080/provider" + "/" + providerId + "/consumptions";
             ProviderNotifier.logger.info(providerUrl + " Generated: " + reading);
             Object response = this.restTemplate.postForObject(providerUrl, reading, String.class);
             ProviderNotifier.logger.info("Provider Response: " + response.toString());

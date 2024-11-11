@@ -20,6 +20,6 @@ public class ReadingGenerator implements GenerateBehavior {
     public int generate() {
         this.setCurrentNumber(this.random.nextInt(this.currentNumber, this.currentNumber + 100));
 
-        return getCurrentNumber();
+        return this.getCurrentNumber();
     }
 }
