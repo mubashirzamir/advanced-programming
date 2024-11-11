@@ -45,11 +45,12 @@ public class ConsumptionController {
                                                   @RequestBody Consumption updatedConsumption) {
         return this.consumptionRepository.findById(id)
                 .map(consumption -> {
-                    consumption.setCitizenId(updatedConsumption.getCitizenId());
-                    consumption.setSmartMeterId(updatedConsumption.getSmartMeterId());
+                    consumption.setEntityId(updatedConsumption.getEntityId());
+                    consumption.setEntityType(updatedConsumption.getEntityType());
                     consumption.setConsumption(updatedConsumption.getConsumption());
                     consumption.setGeneratedAt(updatedConsumption.getGeneratedAt());
                     this.consumptionRepository.save(consumption);
+
                     return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
                 })
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));

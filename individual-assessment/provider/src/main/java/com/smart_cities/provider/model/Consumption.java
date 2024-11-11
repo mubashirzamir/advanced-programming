@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.smart_cities.provider.entity.Provider;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.PositiveOrZero;
 
 import java.time.LocalDateTime;
@@ -20,11 +19,11 @@ public class Consumption {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column()
-    private Long citizenId;
+    @Column(nullable = false)
+    private Long entityId;
 
-    @Column()
-    private Long smartMeterId;
+    @Column(nullable = false)
+    private String entityType;
 
     @Column(nullable = false)
     @PositiveOrZero
@@ -40,9 +39,9 @@ public class Consumption {
 
     }
 
-    public Consumption(Long citizenId, Long smartMeterId, int consumption, LocalDateTime generatedAt) {
-        this.citizenId = citizenId;
-        this.smartMeterId = smartMeterId;
+    public Consumption(Long entityId, String entityType, int consumption, LocalDateTime generatedAt) {
+        this.entityId = entityId;
+        this.entityType = entityType;
         this.consumption = consumption;
         this.generatedAt = generatedAt;
     }
@@ -51,20 +50,20 @@ public class Consumption {
         return this.id;
     }
 
-    public Long getCitizenId() {
-        return this.citizenId;
+    public Long getEntityId() {
+        return this.entityId;
     }
 
-    public void setCitizenId(Long citizenId) {
-        this.citizenId = citizenId;
+    public void setEntityId(Long entityId) {
+        this.entityId = entityId;
     }
 
-    public Long getSmartMeterId() {
-        return this.smartMeterId;
+    public String getEntityType() {
+        return this.entityType;
     }
 
-    public void setSmartMeterId(Long smartMeterId) {
-        this.smartMeterId = smartMeterId;
+    public void setEntityType(String entityType) {
+        this.entityType = entityType;
     }
 
     public int getConsumption() {
@@ -91,20 +90,6 @@ public class Consumption {
         this.generatedAt = generatedAt;
     }
 
-    @AssertTrue(message = "Either citizen ID or meter ID must be provided.")
-    private boolean isCitizenIdCorrect() {
-        System.out.println(this.toString());
-        if (this.citizenId == null && this.smartMeterId == null) {
-            return false;
-        }
-
-        if (this.citizenId != null && this.smartMeterId != null) {
-            return false;
-        }
-
-        return true;
-    }
-
     @Override
     public String toString() {
         try {
@@ -120,9 +105,8 @@ public class Consumption {
         Map<String, Object> map = new HashMap<>();
 
         map.put("id", this.getId());
-        map.put("provider_id", this.getProvider().getId());
-        map.put("citizen_id", this.getCitizenId());
-        map.put("smart_meter_id", this.getSmartMeterId());
+        map.put("entity_id", this.getProvider().getId());
+        map.put("entity_type", this.getEntityType());
         map.put("consumption", this.getConsumption());
         map.put("generatedAt", this.getGeneratedAt());
 
