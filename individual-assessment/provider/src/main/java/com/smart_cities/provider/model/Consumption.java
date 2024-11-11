@@ -7,8 +7,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.PositiveOrZero;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 
 @Entity
 @Table(name = "consumptions")
@@ -87,17 +85,5 @@ public class Consumption {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public Map<String, Object> toPostPayload() {
-        Map<String, Object> map = new HashMap<>();
-
-        map.put("id", this.getId());
-        map.put("entity_id", this.getEntityId());
-        map.put("entity_type", this.getEntityType());
-        map.put("consumption", this.getConsumption());
-        map.put("generatedAt", this.getGeneratedAt());
-
-        return map;
     }
 }
