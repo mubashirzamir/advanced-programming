@@ -1,6 +1,5 @@
 package com.smart_cities.provider.controller;
 
-import com.smart_cities.provider.entity.Provider;
 import com.smart_cities.provider.model.Consumption;
 import com.smart_cities.provider.repository.ConsumptionRepository;
 import org.springframework.http.HttpStatus;
@@ -13,11 +12,8 @@ import java.util.List;
 public class ConsumptionController {
     private final ConsumptionRepository consumptionRepository;
 
-    private final Provider provider;
-
-    public ConsumptionController(ConsumptionRepository consumptionRepository, Provider provider) {
+    public ConsumptionController(ConsumptionRepository consumptionRepository) {
         this.consumptionRepository = consumptionRepository;
-        this.provider = provider;
     }
 
     @GetMapping("/consumptions")
@@ -34,10 +30,7 @@ public class ConsumptionController {
 
     @PostMapping("/consumptions")
     public ResponseEntity<Consumption> createConsumption(@RequestBody Consumption newConsumption) {
-        newConsumption.setProvider(this.provider);
-        Consumption consumption = this.consumptionRepository.save(newConsumption);
-
-        return new ResponseEntity<>(consumption, HttpStatus.CREATED);
+        return new ResponseEntity<>(this.consumptionRepository.save(newConsumption), HttpStatus.CREATED);
     }
 
     @PutMapping("/consumptions/{id}")
