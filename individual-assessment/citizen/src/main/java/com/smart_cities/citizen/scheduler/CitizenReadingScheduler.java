@@ -47,7 +47,7 @@ public class CitizenReadingScheduler {
                     citizen.getType(),
                     citizen.generateReading(),
                     LocalDateTime.now()
-            ).toPostPayload());
+            ).toPostPayload(), citizen.getProviderId());
         }
     }
 }

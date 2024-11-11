@@ -48,7 +48,7 @@ public class MeterReadingScheduler {
                     meter.getType(),
                     meter.generateReading(),
                     LocalDateTime.now()
-            ).toPostPayload());
+            ).toPostPayload(), meter.getProviderId());
         }
     }
 }
