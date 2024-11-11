@@ -3,7 +3,6 @@ package com.smart_cities.provider.model;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.smart_cities.provider.entity.Provider;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.PositiveOrZero;
 
@@ -31,9 +30,6 @@ public class Consumption {
 
     @Column(nullable = false)
     private LocalDateTime generatedAt;
-
-    @Transient
-    private Provider provider;
 
     public Consumption() {
 
@@ -74,14 +70,6 @@ public class Consumption {
         this.consumption = consumption;
     }
 
-    public Provider getProvider() {
-        return this.provider;
-    }
-
-    public void setProvider(Provider provider) {
-        this.provider = provider;
-    }
-
     public LocalDateTime getGeneratedAt() {
         return this.generatedAt;
     }
@@ -105,7 +93,7 @@ public class Consumption {
         Map<String, Object> map = new HashMap<>();
 
         map.put("id", this.getId());
-        map.put("entity_id", this.getProvider().getId());
+        map.put("entity_id", this.getEntityId());
         map.put("entity_type", this.getEntityType());
         map.put("consumption", this.getConsumption());
         map.put("generatedAt", this.getGeneratedAt());
