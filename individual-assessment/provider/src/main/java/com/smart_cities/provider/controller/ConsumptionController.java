@@ -14,8 +14,6 @@ import java.util.List;
 public class ConsumptionController {
     private final ConsumptionRepository consumptionRepository;
 
-    private final CityNotifier cityNotifier;
-
     private final Provider provider;
 
     public ConsumptionController(ConsumptionRepository consumptionRepository,
@@ -23,7 +21,6 @@ public class ConsumptionController {
                                  CityNotifier cityNotifier) {
         this.consumptionRepository = consumptionRepository;
         this.provider = provider;
-        this.cityNotifier = cityNotifier;
     }
 
     @GetMapping("/consumptions")
@@ -42,7 +39,6 @@ public class ConsumptionController {
     public ResponseEntity<Consumption> createConsumption(@RequestBody Consumption newConsumption) {
         newConsumption.setProvider(this.provider);
         Consumption consumption = this.consumptionRepository.save(newConsumption);
-        this.cityNotifier.notify(consumption.toPostPayload());
 
         return new ResponseEntity<>(consumption, HttpStatus.CREATED);
     }
