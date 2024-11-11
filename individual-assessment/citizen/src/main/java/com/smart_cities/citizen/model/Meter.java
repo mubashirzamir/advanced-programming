@@ -47,7 +47,7 @@ public class Meter implements GeneratesReadings {
         return "smartMeter";
     }
 
-    public int generateReading() {
+    public Long generateReading() {
         return this.generateBehavior.generate();
     }
 }

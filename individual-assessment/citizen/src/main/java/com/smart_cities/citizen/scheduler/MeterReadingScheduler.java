@@ -1,7 +1,7 @@
 package com.smart_cities.citizen.scheduler;
 
 import com.smart_cities.citizen.model.Meter;
-import com.smart_cities.citizen.model.Reading;
+import com.smart_cities.citizen.dto.Reading;
 import com.smart_cities.citizen.repository.MeterRepository;
 import com.smart_cities.citizen.service.ProviderNotifier;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -7,18 +7,18 @@ import java.util.Random;
 public class ReadingGenerator implements GenerateBehavior {
     private final Random random = new Random();
 
-    private int currentNumber = 0;
+    private Long currentNumber = 0L;
 
-    public int getCurrentNumber() {
+    public Long getCurrentNumber() {
         return this.currentNumber;
     }
 
-    public void setCurrentNumber(int currentNumber) {
+    public void setCurrentNumber(Long currentNumber) {
         this.currentNumber = currentNumber;
     }
 
-    public int generate() {
-        this.setCurrentNumber(this.random.nextInt(this.currentNumber, this.currentNumber + 100));
+    public Long generate() {
+        this.setCurrentNumber(this.random.nextLong(this.currentNumber, this.currentNumber + 100));
 
         return this.getCurrentNumber();
     }
