@@ -27,7 +27,6 @@ public class GatewayApplication {
         return builder.routes()
                 .route("city-routes", r -> r
                         .path("/city/**")
-                        .filters(f -> f.prefixPath("/api"))
                         .uri(uriConfiguration.getCity()))
                 .route("provider-01-routes", r -> r
                         .path("/provider/1/**")

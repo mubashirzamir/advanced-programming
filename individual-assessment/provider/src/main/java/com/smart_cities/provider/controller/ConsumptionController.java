@@ -2,23 +2,32 @@ package com.smart_cities.provider.controller;
 
 import com.smart_cities.provider.model.Consumption;
 import com.smart_cities.provider.repository.ConsumptionRepository;
+import com.smart_cities.provider.service.ConsumptionService;
+import com.smart_cities.provider.specification.ConsumptionFilter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
 public class ConsumptionController {
     private final ConsumptionRepository consumptionRepository;
+    private final ConsumptionService consumptionService;
 
-    public ConsumptionController(ConsumptionRepository consumptionRepository) {
+    public ConsumptionController(ConsumptionRepository consumptionRepository, ConsumptionService consumptionService) {
         this.consumptionRepository = consumptionRepository;
+        this.consumptionService = consumptionService;
     }
 
     @GetMapping("/consumptions")
-    public List<Consumption> getAllConsumptions() {
-        return this.consumptionRepository.findAll();
+    public List<Consumption> getAllConsumptions(
+            @RequestParam(value = "consumptionPeriodStart") LocalDateTime consumptionPeriodStart,
+            @RequestParam(value = "consumptionPeriodEnd") LocalDateTime consumptionPeriodEnd,
+            ConsumptionFilter consumptionFilter
+    ) {
+        return this.consumptionService.getAllConsumptions(consumptionFilter);
     }
 
     @GetMapping("/consumptions/{id}")
