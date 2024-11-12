@@ -34,7 +34,7 @@ public class ConsumptionFilter implements Specification<Consumption> {
     @Override
     public Predicate toPredicate(Root<Consumption> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
         ArrayList<Predicate> predicates = new ArrayList<>();
-        System.out.println(root.get("generatedAt"));
+
         if (!ObjectUtils.isEmpty(this.getConsumptionPeriodStart())) {
             predicates.add(cb.greaterThan(root.get("generatedAt"), this.getConsumptionPeriodStart()));
         }
