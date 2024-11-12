@@ -2,7 +2,7 @@ package com.smart_cities.provider.controller;
 
 import com.smart_cities.provider.model.Consumption;
 import com.smart_cities.provider.repository.ConsumptionRepository;
-import org.springframework.data.domain.Example;
+import com.smart_cities.provider.specification.ConsumptionFilter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +18,8 @@ public class ConsumptionController {
     }
 
     @GetMapping("/consumptions")
-    public List<Consumption> getAllConsumptions(@RequestBody Consumption consumptionFilter) {
-        return this.consumptionRepository.findAll(Example.of(consumptionFilter));
+    public List<Consumption> getAllConsumptions(@ModelAttribute ConsumptionFilter consumptionFilter) {
+        return this.consumptionRepository.findAll(consumptionFilter);
     }
 
     @GetMapping("/consumptions/{id}")
