@@ -25,13 +25,17 @@ public class ReadingService {
                 .map(reading -> {
                     reading.setConsumption(this.readingGenerator.generate(reading.getConsumption()));
                     reading.setGeneratedAt(LocalDateTime.now());
+                    this.readingRepository.save(reading);
+
                     return reading;
                 })
-                .orElseGet(() -> new Reading(
-                        entityId,
-                        entityType,
-                        this.readingGenerator.generate(0L),
-                        LocalDateTime.now())
+                .orElseGet(() ->
+                        this.readingRepository.save(new Reading(
+                                entityId,
+                                entityType,
+                                this.readingGenerator.generate(0L),
+                                LocalDateTime.now())
+                        )
                 );
     }
 }

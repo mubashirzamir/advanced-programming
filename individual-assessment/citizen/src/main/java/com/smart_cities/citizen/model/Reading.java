@@ -16,16 +16,16 @@ public class Reading {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private Long entityId;
 
-    @Column
+    @Column(nullable = false)
     private String entityType;
 
-    @Column
+    @Column(nullable = false)
     private Long consumption;
 
-    @Column
+    @Column(nullable = false)
     private LocalDateTime generatedAt;
 
     public Reading() {
