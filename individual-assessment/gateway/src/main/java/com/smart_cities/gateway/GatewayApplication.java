@@ -25,9 +25,6 @@ public class GatewayApplication {
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder, UriConfiguration uriConfiguration) {
         return builder.routes()
-                .route("city-routes", r -> r
-                        .path("/city/**")
-                        .uri(uriConfiguration.getCity()))
                 .route("provider-01-routes", r -> r
                         .path("/provider/1/**")
                         .filters(GatewayApplication.applyDefaultRouteFilters())
