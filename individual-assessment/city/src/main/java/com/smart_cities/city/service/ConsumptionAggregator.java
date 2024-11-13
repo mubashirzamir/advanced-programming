@@ -16,7 +16,12 @@ public class ConsumptionAggregator {
         this.aggregatedConsumptionRepository = aggregatedConsumptionRepository;
     }
 
-    public final void aggregate(List<Consumption> consumptions, Long providerId) {
+    public final void aggregate(
+            List<Consumption> consumptions,
+            Long providerId,
+            LocalDateTime periodStart,
+            LocalDateTime periodEnd
+    ) {
         Long totalConsumption = 0L;
         Long averageConsumption = 0L;
 
@@ -30,15 +35,9 @@ public class ConsumptionAggregator {
         aggregatedConsumption.setProviderId(providerId);
         aggregatedConsumption.setTotalConsumption(totalConsumption);
         aggregatedConsumption.setAverageConsumption(averageConsumption);
-        aggregatedConsumption.setConsumptionPeriodStart(this.deriveConsumptionPeriodStart(providerId));
-//        aggregatedConsumption.setConsumptionPeriodEnd(periodEnd);
+        aggregatedConsumption.setConsumptionPeriodStart(periodStart);
+        aggregatedConsumption.setConsumptionPeriodEnd(periodEnd);
 
         this.aggregatedConsumptionRepository.save(aggregatedConsumption);
-    }
-
-    public LocalDateTime deriveConsumptionPeriodStart(Long providerId) {
-        return this.aggregatedConsumptionRepository.findFirstByProviderIdOrderByConsumptionPeriodEnd(providerId)
-                .map(AggregatedConsumption::getConsumptionPeriodEnd)
-                .orElse(LocalDateTime.of(2024, 1, 1, 0, 0, 0));
     }
 }

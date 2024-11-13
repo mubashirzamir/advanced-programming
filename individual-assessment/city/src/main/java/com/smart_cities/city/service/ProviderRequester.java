@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
@@ -26,11 +27,15 @@ public class ProviderRequester {
     }
 
     @Async
-    public CompletableFuture<List<Consumption>> request(Long providerId) {
+    public CompletableFuture<List<Consumption>> request(
+            Long providerId,
+            LocalDateTime periodStart,
+            LocalDateTime periodEnd
+    ) {
         try {
             List<Consumption> consumptions = List.of(
                     Objects.requireNonNull(this.restTemplate.getForObject(
-                            this.buildUri(providerId),
+                            this.buildUri(providerId, periodStart, periodEnd),
                             Consumption[].class)
                     )
             );
@@ -45,9 +50,10 @@ public class ProviderRequester {
         return CompletableFuture.completedFuture(List.of());
     }
 
-    public String buildUri(Long providerId) {
+    public String buildUri(Long providerId, LocalDateTime periodStart, LocalDateTime periodEnd) {
         return UriComponentsBuilder.fromUri(URI.create("http://localhost:8080/provider" + "/" + providerId + "/consumptions"))
-//                .queryParam("consumptionPeriodEnd", periodEnd.toString())
+                .queryParam("consumptionPeriodStart", periodStart.toString())
+                .queryParam("consumptionPeriodEnd", periodEnd.toString())
                 .toUriString();
     }
 }
