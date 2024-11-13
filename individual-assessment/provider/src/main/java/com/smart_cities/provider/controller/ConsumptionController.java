@@ -22,41 +22,8 @@ public class ConsumptionController {
         return this.consumptionRepository.findAll(consumptionFilter);
     }
 
-    @GetMapping("/consumptions/{id}")
-    public ResponseEntity<Consumption> getConsumptionById(@PathVariable Long id) {
-        return this.consumptionRepository.findById(id)
-                .map(consumption -> new ResponseEntity<>(consumption, HttpStatus.OK))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
     @PostMapping("/consumptions")
     public ResponseEntity<Consumption> createConsumption(@RequestBody Consumption newConsumption) {
         return new ResponseEntity<>(this.consumptionRepository.save(newConsumption), HttpStatus.CREATED);
-    }
-
-    @PutMapping("/consumptions/{id}")
-    public ResponseEntity<Void> updateConsumption(@PathVariable Long id,
-                                                  @RequestBody Consumption updatedConsumption) {
-        return this.consumptionRepository.findById(id)
-                .map(consumption -> {
-                    consumption.setEntityId(updatedConsumption.getEntityId());
-                    consumption.setEntityType(updatedConsumption.getEntityType());
-                    consumption.setConsumption(updatedConsumption.getConsumption());
-                    consumption.setGeneratedAt(updatedConsumption.getGeneratedAt());
-                    this.consumptionRepository.save(consumption);
-
-                    return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-                })
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
-    @DeleteMapping("/consumptions/{id}")
-    public ResponseEntity<Void> deleteConsumption(@PathVariable Long id) {
-        return this.consumptionRepository.findById(id)
-                .map(consumption -> {
-                    this.consumptionRepository.delete(consumption);
-                    return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-                })
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }
