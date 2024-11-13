@@ -17,23 +17,21 @@ public class ReadingService {
         this.readingGenerator = readingGenerator;
     }
 
-    public Reading getReading(Long entityId, String entityType) {
-        return this.readingRepository.findFirstByEntityIdAndEntityTypeOrderByGeneratedAtDesc(entityId, entityType)
-                .orElse(null);
-    }
-
-    public Reading createReading(IsAbleToCreateReadings entity) {
+    public Reading generateReading(IsAbleToCreateReadings entity) {
         Long entityId = entity.getId();
         String entityType = entity.getType();
 
-        Reading lastReading = this.getReading(entityId, entityType);
-
-        Reading newReading = new Reading(entityId,
-                entityType,
-                lastReading == null ? 0L : this.readingGenerator.generate(lastReading.getConsumption()),
-                LocalDateTime.now()
-        );
-
-        return this.readingRepository.save(newReading);
+        return this.readingRepository.findByEntityIdAndEntityType(entityId, entityType)
+                .map(reading -> {
+                    reading.setConsumption(this.readingGenerator.generate(reading.getConsumption()));
+                    reading.setGeneratedAt(LocalDateTime.now());
+                    return reading;
+                })
+                .orElseGet(() -> new Reading(
+                        entityId,
+                        entityType,
+                        this.readingGenerator.generate(0L),
+                        LocalDateTime.now())
+                );
     }
 }

@@ -47,7 +47,7 @@ public class CitizenReadingScheduler {
     public void generateAndNotify() {
         for (Citizen citizen : this.getCitizens()) {
             this.providerNotifier.notify(
-                    this.readingService.createReading(citizen).toPostPayload(),
+                    this.readingService.generateReading(citizen).toPostPayload(),
                     citizen.getProviderId()
             );
         }

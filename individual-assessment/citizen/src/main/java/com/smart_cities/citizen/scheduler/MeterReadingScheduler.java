@@ -47,7 +47,7 @@ public class MeterReadingScheduler {
     public void generateAndNotify() {
         for (Meter meter : this.getMeters()) {
             this.providerNotifier.notify(
-                    this.readingService.createReading(meter).toPostPayload(),
+                    this.readingService.generateReading(meter).toPostPayload(),
                     meter.getProviderId()
             );
         }
