@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class ProviderPoller {
     private final ProviderRequester providerRequester;
@@ -17,8 +19,10 @@ public class ProviderPoller {
         this.consumptionAggregator = consumptionAggregator;
     }
 
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 10000)
     public void pollAndAggregate() {
+        LocalDateTime now = LocalDateTime.now();
+
         providerRequester.request(1L)
                 .thenAccept(consumptions -> this.consumptionAggregator.aggregate(consumptions, 1L));
         providerRequester.request(2L)

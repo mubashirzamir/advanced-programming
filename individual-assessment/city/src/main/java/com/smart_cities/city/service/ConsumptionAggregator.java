@@ -5,6 +5,7 @@ import com.smart_cities.city.model.AggregatedConsumption;
 import com.smart_cities.city.repository.AggregatedConsumptionRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -29,7 +30,15 @@ public class ConsumptionAggregator {
         aggregatedConsumption.setProviderId(providerId);
         aggregatedConsumption.setTotalConsumption(totalConsumption);
         aggregatedConsumption.setAverageConsumption(averageConsumption);
+        aggregatedConsumption.setConsumptionPeriodStart(this.deriveConsumptionPeriodStart(providerId));
+//        aggregatedConsumption.setConsumptionPeriodEnd(periodEnd);
 
         this.aggregatedConsumptionRepository.save(aggregatedConsumption);
+    }
+
+    public LocalDateTime deriveConsumptionPeriodStart(Long providerId) {
+        return this.aggregatedConsumptionRepository.findFirstByProviderIdOrderByConsumptionPeriodEnd(providerId)
+                .map(AggregatedConsumption::getConsumptionPeriodEnd)
+                .orElse(LocalDateTime.of(2024, 1, 1, 0, 0, 0));
     }
 }

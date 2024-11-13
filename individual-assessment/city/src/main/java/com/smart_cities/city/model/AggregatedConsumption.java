@@ -57,4 +57,20 @@ public class AggregatedConsumption {
     public void setAverageConsumption(Long averageConsumption) {
         this.averageConsumption = averageConsumption;
     }
+
+    public LocalDateTime getConsumptionPeriodStart() {
+        return consumptionPeriodStart;
+    }
+
+    public void setConsumptionPeriodStart(LocalDateTime consumptionPeriodStart) {
+        this.consumptionPeriodStart = consumptionPeriodStart;
+    }
+
+    public LocalDateTime getConsumptionPeriodEnd() {
+        return consumptionPeriodEnd;
+    }
+
+    public void setConsumptionPeriodEnd(LocalDateTime consumptionPeriodEnd) {
+        this.consumptionPeriodEnd = consumptionPeriodEnd;
+    }
 }

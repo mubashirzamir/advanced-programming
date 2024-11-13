@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
@@ -26,10 +28,13 @@ public class ProviderRequester {
     @Async
     public CompletableFuture<List<Consumption>> request(Long providerId) {
         try {
-            String providerUrl = "http://localhost:8080/provider" + "/" + providerId + "/consumptions";
-            List<Consumption> consumptions = List.of(Objects.requireNonNull(
-                    this.restTemplate.getForObject(providerUrl, Consumption[].class)
-            ));
+            List<Consumption> consumptions = List.of(
+                    Objects.requireNonNull(this.restTemplate.getForObject(
+                            this.buildUri(providerId),
+                            Consumption[].class)
+                    )
+            );
+
             ProviderRequester.logger.info("Provider " + providerId + " Response: " + consumptions);
 
             return CompletableFuture.completedFuture(consumptions);
@@ -38,5 +43,11 @@ public class ProviderRequester {
         }
 
         return CompletableFuture.completedFuture(List.of());
+    }
+
+    public String buildUri(Long providerId) {
+        return UriComponentsBuilder.fromUri(URI.create("http://localhost:8080/provider" + "/" + providerId + "/consumptions"))
+//                .queryParam("consumptionPeriodEnd", periodEnd.toString())
+                .toUriString();
     }
 }

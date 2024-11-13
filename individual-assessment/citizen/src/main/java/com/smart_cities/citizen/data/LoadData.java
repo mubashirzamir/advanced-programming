@@ -19,13 +19,15 @@ public class LoadData {
     CommandLineRunner initDatabase(CitizenRepository citizenRepository, MeterRepository meterRepository) {
         return args -> {
             for (long i = 0; i < 100; i++) {
-                long providerId = (i % 3) + 1;
-                log.info("Preloading " + citizenRepository.save(new Citizen(providerId)));
+                log.info("Preloading " + citizenRepository.save(new Citizen(1L)));
+                log.info("Preloading " + citizenRepository.save(new Citizen(2L)));
+                log.info("Preloading " + citizenRepository.save(new Citizen(3L)));
             }
 
             for (long i = 0; i < 50; i++) {
-                long providerId = (i % 3) + 1;
-                log.info("Preloading " + meterRepository.save(new Meter(providerId)));
+                log.info("Preloading " + meterRepository.save(new Meter(1L)));
+                log.info("Preloading " + meterRepository.save(new Meter(2L)));
+                log.info("Preloading " + meterRepository.save(new Meter(3L)));
             }
         };
     }
