@@ -3,6 +3,7 @@ package com.smart_cities.citizen.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -11,6 +12,9 @@ import java.util.Map;
 
 @Service
 public class ProviderNotifier {
+    @Value("${GATEWAY_URL}")
+    private String gatewayUrl;
+
     private final RestTemplate restTemplate;
 
     private static final Logger logger = LoggerFactory.getLogger(ProviderNotifier.class);
@@ -23,7 +27,7 @@ public class ProviderNotifier {
     @Async
     public void notify(Map<String, Object> reading, Long providerId) {
         try {
-            String providerUrl = "http://localhost:8080/provider" + "/" + providerId + "/consumptions";
+            String providerUrl = "http://" + this.gatewayUrl + "/provider" + "/" + providerId + "/consumptions";
             ProviderNotifier.logger.info(providerUrl + " Generated: " + reading);
             Object response = this.restTemplate.postForObject(providerUrl, reading, String.class);
             ProviderNotifier.logger.info("Provider Response: " + response.toString());
