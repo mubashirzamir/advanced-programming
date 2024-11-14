@@ -41,21 +41,21 @@ public class ProviderPoller {
     public void pollAndAggregate() {
         this.setConsumptionPeriod();
 
-        providerRequester.request(1L, this.getConsumptionPeriodStart(), this.getConsumptionPeriodEnd())
+        this.providerRequester.request(1L, this.getConsumptionPeriodStart(), this.getConsumptionPeriodEnd())
                 .thenAccept(consumptions -> this.consumptionAggregator.aggregate(
                         consumptions,
                         1L,
                         this.getConsumptionPeriodStart(),
                         this.getConsumptionPeriodEnd())
                 );
-        providerRequester.request(2L, this.getConsumptionPeriodStart(), this.getConsumptionPeriodEnd())
+        this.providerRequester.request(2L, this.getConsumptionPeriodStart(), this.getConsumptionPeriodEnd())
                 .thenAccept(consumptions -> this.consumptionAggregator.aggregate(
                         consumptions,
                         2L,
                         this.getConsumptionPeriodStart(),
                         this.getConsumptionPeriodEnd())
                 );
-        providerRequester.request(3L, this.getConsumptionPeriodStart(), this.getConsumptionPeriodEnd())
+        this.providerRequester.request(3L, this.getConsumptionPeriodStart(), this.getConsumptionPeriodEnd())
                 .thenAccept(consumptions -> this.consumptionAggregator.aggregate(
                         consumptions,
                         3L,
