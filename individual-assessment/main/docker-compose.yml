@@ -7,7 +7,7 @@ services:
       - 'POSTGRES_PASSWORD=123'
       - 'POSTGRES_USER=postgres'
     volumes:
-      - ./data/citizen:/var/lib/postgresql/data
+      - ../data/citizen:/var/lib/postgresql/data
     ports:
       - '5432:5432'
     networks:
@@ -25,7 +25,7 @@ services:
       - 'POSTGRES_PASSWORD=123'
       - 'POSTGRES_USER=postgres'
     volumes:
-      - ./data/provider_01:/var/lib/postgresql/data
+      - ../data/provider_01:/var/lib/postgresql/data
     ports:
       - '5433:5432'
     networks:
@@ -43,7 +43,7 @@ services:
       - 'POSTGRES_PASSWORD=123'
       - 'POSTGRES_USER=postgres'
     volumes:
-      - ./data/provider_02:/var/lib/postgresql/data
+      - ../data/provider_02:/var/lib/postgresql/data
     ports:
       - '5434:5432'
     networks:
@@ -61,7 +61,7 @@ services:
       - 'POSTGRES_PASSWORD=123'
       - 'POSTGRES_USER=postgres'
     volumes:
-      - ./data/provider_03:/var/lib/postgresql/data
+      - ../data/provider_03:/var/lib/postgresql/data
     ports:
       - '5435:5432'
     networks:
@@ -79,7 +79,7 @@ services:
       - 'POSTGRES_PASSWORD=123'
       - 'POSTGRES_USER=postgres'
     volumes:
-      - ./data/city:/var/lib/postgresql/data
+      - ../data/city:/var/lib/postgresql/data
     ports:
       - '5436:5432'
     networks:
@@ -92,7 +92,7 @@ services:
 
   gateway:
     build:
-      context: ./gateway
+      context: ../gateway
     environment:
       - PROVIDER_01_ROUTE_URI=http://provider-01:9081
       - PROVIDER_02_ROUTE_URI=http://provider-02:9081
@@ -102,7 +102,7 @@ services:
 
   citizen:
     build:
-      context: ./citizen
+      context: ../citizen
     ports:
       - "8082:8082"
     environment:
@@ -119,7 +119,7 @@ services:
 
   provider-01:
     build:
-      context: ./provider
+      context: ../provider
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://provider-01-db:5432/provider_01
       - SPRING_DATASOURCE_USERNAME=postgres
@@ -136,7 +136,7 @@ services:
 
   provider-02:
     build:
-      context: ./provider
+      context: ../provider
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://provider-02-db:5432/provider_02
       - SPRING_DATASOURCE_USERNAME=postgres
@@ -153,7 +153,7 @@ services:
 
   provider-03:
     build:
-      context: ./provider
+      context: ../provider
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://provider-03-db:5432/provider_03
       - SPRING_DATASOURCE_USERNAME=postgres
@@ -170,7 +170,7 @@ services:
 
   city:
     build:
-      context: ./city
+      context: ../city
     ports:
       - "8083:8083"
     environment:
