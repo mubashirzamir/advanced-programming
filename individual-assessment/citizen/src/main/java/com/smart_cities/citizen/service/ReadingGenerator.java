@@ -2,7 +2,6 @@ package com.smart_cities.citizen.service;
 
 import org.springframework.stereotype.Component;
 
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Component
