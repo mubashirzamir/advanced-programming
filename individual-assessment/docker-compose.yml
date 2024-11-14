@@ -98,7 +98,7 @@ services:
       context: ./provider
     image: 'microservice-provider'
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://provider-01-db:5433/provider_01
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://provider-01-db:5432/provider_01
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=123
       - SPRING.JPA.HIBERNATE.DDL-AUTO=create-drop
@@ -117,7 +117,7 @@ services:
       context: ./provider
     image: 'microservice-provider'
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://provider-02-db:5434/provider_02
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://provider-02-db:5432/provider_02
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=123
       - SPRING.JPA.HIBERNATE.DDL-AUTO=create-drop
@@ -136,7 +136,7 @@ services:
       context: ./provider
     image: 'microservice-provider'
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://provider-03-db:5435/provider_03
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://provider-03-db:5432/provider_03
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=123
       - SPRING.JPA.HIBERNATE.DDL-AUTO=create-drop
@@ -157,14 +157,15 @@ services:
     ports:
       - "8083:8083"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5436/city
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://city-db:5432/city
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=123
       - SPRING.JPA.HIBERNATE.DDL-AUTO=create-drop
-      - SPRING.DATA.JDBC.DIALECT=postgresql
     depends_on:
       - city-db
       - gateway
+    networks:
+      - app-network
 
 networks:
   app-network:
