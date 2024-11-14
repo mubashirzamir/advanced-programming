@@ -1,0 +1,165 @@
+services:
+
+  citizen-db:
+    image: 'postgres:latest'
+    environment:
+      - 'POSTGRES_DB=citizen'
+      - 'POSTGRES_PASSWORD=123'
+      - 'POSTGRES_USER=postgres'
+    volumes:
+      - ./data/citizen:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    networks:
+      - app-network
+
+  provider-01-db:
+    image: 'postgres:latest'
+    environment:
+      - 'POSTGRES_DB=provider_01'
+      - 'POSTGRES_PASSWORD=123'
+      - 'POSTGRES_USER=postgres'
+    volumes:
+      - ./data/provider_01:/var/lib/postgresql/data
+    ports:
+      - '5433:5432'
+    networks:
+      - app-network
+
+  provider-02-db:
+    image: 'postgres:latest'
+    environment:
+      - 'POSTGRES_DB=provider_02'
+      - 'POSTGRES_PASSWORD=123'
+      - 'POSTGRES_USER=postgres'
+    volumes:
+      - ./data/provider_02:/var/lib/postgresql/data
+    ports:
+      - '5434:5432'
+    networks:
+      - app-network
+
+  provider-03-db:
+    image: 'postgres:latest'
+    environment:
+      - 'POSTGRES_DB=provider_03'
+      - 'POSTGRES_PASSWORD=123'
+      - 'POSTGRES_USER=postgres'
+    volumes:
+      - ./data/provider_03:/var/lib/postgresql/data
+    ports:
+      - '5435:5432'
+    networks:
+      - app-network
+
+  city-db:
+    image: 'postgres:latest'
+    environment:
+      - 'POSTGRES_DB=city'
+      - 'POSTGRES_PASSWORD=123'
+      - 'POSTGRES_USER=postgres'
+    volumes:
+      - ./data/city:/var/lib/postgresql/data
+    ports:
+      - '5436:5432'
+    networks:
+      - app-network
+
+  gateway:
+    build:
+      context: ./gateway
+    image: 'gateway-microservice:latest'
+    ports:
+      - "8081:8080"
+
+  citizen:
+    build:
+      context: ./citizen
+    image: 'citizen-microservice:latest'
+    ports:
+      - "8082:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://citizen-db:5432/citizen
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=123
+    depends_on:
+      - citizen-db
+      - gateway
+      - city
+      - provider-01
+      - provider-02
+      - provider-03
+    networks:
+      - app-network
+
+  provider-01:
+    build:
+      context: ./provider
+    image: 'microservice-provider'
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://provider-01-db:5433/provider_01
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=123
+      - ID=1
+    ports:
+      - '9081:9081'
+    depends_on:
+      - provider-01-db
+      - gateway
+      - city
+    networks:
+      - app-network
+
+  provider-02:
+    build:
+      context: ./provider
+    image: 'microservice-provider'
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://provider-02-db:5434/provider_02
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=123
+      - ID=2
+    ports:
+      - '9082:9081'
+    depends_on:
+      - provider-02-db
+      - gateway
+      - city
+    networks:
+      - app-network
+
+  provider-03:
+    build:
+      context: ./provider
+    image: 'microservice-provider'
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://provider-03-db:5435/provider_03
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=123
+      - ID=3
+    ports:
+      - '9083:9081'
+    depends_on:
+      - provider-03-db
+      - gateway
+      - city
+    networks:
+      - app-network
+
+  city:
+    build:
+      context: ./city
+    image: 'city-microservice:latest'
+    ports:
+      - "8082:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://city-db:5436/city
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=123
+    depends_on:
+      - city-db
+      - gateway
+
+networks:
+  app-network:
+    driver: bridge
