@@ -93,14 +93,12 @@ services:
   gateway:
     build:
       context: ./gateway
-    image: 'gateway-microservice:latest'
     ports:
       - "8081:8080"
 
   citizen:
     build:
       context: ./citizen
-    image: 'citizen-microservice:latest'
     ports:
       - "8082:8082"
     environment:
@@ -117,7 +115,6 @@ services:
   provider-01:
     build:
       context: ./provider
-    image: 'microservice-provider'
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://provider-01-db:5432/provider_01
       - SPRING_DATASOURCE_USERNAME=postgres
@@ -135,7 +132,6 @@ services:
   provider-02:
     build:
       context: ./provider
-    image: 'microservice-provider'
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://provider-02-db:5432/provider_02
       - SPRING_DATASOURCE_USERNAME=postgres
@@ -153,7 +149,6 @@ services:
   provider-03:
     build:
       context: ./provider
-    image: 'microservice-provider'
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://provider-03-db:5432/provider_03
       - SPRING_DATASOURCE_USERNAME=postgres
@@ -171,7 +166,6 @@ services:
   city:
     build:
       context: ./city
-    image: 'city-microservice:latest'
     ports:
       - "8083:8083"
     environment:

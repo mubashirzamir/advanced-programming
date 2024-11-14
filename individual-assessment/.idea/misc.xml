@@ -5,7 +5,6 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/main/pom.xml" />
-        <option value="$PROJECT_DIR$/gateway/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
