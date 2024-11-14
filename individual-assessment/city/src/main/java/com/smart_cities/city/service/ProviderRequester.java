@@ -4,6 +4,7 @@ import com.smart_cities.city.dto.Consumption;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -17,6 +18,9 @@ import java.util.concurrent.CompletableFuture;
 
 @Service
 public class ProviderRequester {
+    @Value("${GATEWAY_URL}")
+    private String gatewayUrl;
+
     private final RestTemplate restTemplate;
 
     private static final Logger logger = LoggerFactory.getLogger(ProviderRequester.class);
@@ -51,7 +55,7 @@ public class ProviderRequester {
     }
 
     public String buildUri(Long providerId, LocalDateTime periodStart, LocalDateTime periodEnd) {
-        return UriComponentsBuilder.fromUri(URI.create("http://localhost:8080/provider" + "/" + providerId + "/consumptions"))
+        return UriComponentsBuilder.fromUri(URI.create("http://" + this.gatewayUrl + "/provider" + "/" + providerId + "/consumptions"))
                 .queryParam("consumptionPeriodStart", periodStart.toString())
                 .queryParam("consumptionPeriodEnd", periodEnd.toString())
                 .toUriString();

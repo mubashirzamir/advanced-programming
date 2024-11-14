@@ -106,6 +106,7 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=123
       - SPRING.JPA.HIBERNATE.DDL-AUTO=create-drop
+      - GATEWAY_URL=http://gateway:8080
     depends_on:
       citizen-db:
         condition: service_healthy
@@ -173,6 +174,7 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=123
       - SPRING.JPA.HIBERNATE.DDL-AUTO=create-drop
+      - GATEWAY_URL=http://gateway:8080
     depends_on:
       city-db:
         condition: service_healthy
