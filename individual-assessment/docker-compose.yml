@@ -12,6 +12,11 @@ services:
       - '5432:5432'
     networks:
       - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   provider-01-db:
     image: 'postgres:latest'
@@ -25,6 +30,11 @@ services:
       - '5433:5432'
     networks:
       - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   provider-02-db:
     image: 'postgres:latest'
@@ -38,6 +48,11 @@ services:
       - '5434:5432'
     networks:
       - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   provider-03-db:
     image: 'postgres:latest'
@@ -51,6 +66,11 @@ services:
       - '5435:5432'
     networks:
       - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   city-db:
     image: 'postgres:latest'
@@ -64,6 +84,11 @@ services:
       - '5436:5432'
     networks:
       - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   gateway:
     build:
@@ -84,12 +109,8 @@ services:
       - SPRING_DATASOURCE_PASSWORD=123
       - SPRING.JPA.HIBERNATE.DDL-AUTO=create-drop
     depends_on:
-      - citizen-db
-      - gateway
-      - city
-      - provider-01
-      - provider-02
-      - provider-03
+      citizen-db:
+        condition: service_healthy
     networks:
       - app-network
 
@@ -106,9 +127,8 @@ services:
     ports:
       - '9081:9081'
     depends_on:
-      - provider-01-db
-      - gateway
-      - city
+      provider-01-db:
+        condition: service_healthy
     networks:
       - app-network
 
@@ -125,9 +145,8 @@ services:
     ports:
       - '9082:9081'
     depends_on:
-      - provider-02-db
-      - gateway
-      - city
+      provider-02-db:
+        condition: service_healthy
     networks:
       - app-network
 
@@ -144,9 +163,8 @@ services:
     ports:
       - '9083:9081'
     depends_on:
-      - provider-03-db
-      - gateway
-      - city
+      provider-03-db:
+        condition: service_healthy
     networks:
       - app-network
 
@@ -162,8 +180,8 @@ services:
       - SPRING_DATASOURCE_PASSWORD=123
       - SPRING.JPA.HIBERNATE.DDL-AUTO=create-drop
     depends_on:
-      - city-db
-      - gateway
+      city-db:
+        condition: service_healthy
     networks:
       - app-network
 
