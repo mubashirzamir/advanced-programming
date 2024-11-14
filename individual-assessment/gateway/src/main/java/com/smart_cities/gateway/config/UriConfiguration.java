@@ -4,18 +4,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties
 public class UriConfiguration {
-    private String city = System.getenv().getOrDefault("CITY_ROUTE_URI", "http://localhost:9080");
     private String provider01 = System.getenv().getOrDefault("PROVIDER_01_ROUTE_URI", "http://localhost:9081");
     private String provider02 = System.getenv().getOrDefault("PROVIDER_02_ROUTE_URI", "http://localhost:9082");
     private String provider03 = System.getenv().getOrDefault("PROVIDER_03_ROUTE_URI", "http://localhost:9083");
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
 
     public String getProvider01() {
         return provider01;
