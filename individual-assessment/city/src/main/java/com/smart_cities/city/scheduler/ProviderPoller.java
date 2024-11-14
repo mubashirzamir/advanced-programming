@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 public class ProviderPoller {
     private final ProviderRequester providerRequester;
     private final ConsumptionAggregator consumptionAggregator;
-    private LocalDateTime consumptionPeriodStart = LocalDateTime.of(2024, 1, 1, 0, 0);
-    private LocalDateTime consumptionPeriodEnd = LocalDateTime.of(2024, 1, 1, 0, 0);
+    private LocalDateTime consumptionPeriodStart;
+    private LocalDateTime consumptionPeriodEnd;
 
     @Autowired
     public ProviderPoller(ProviderRequester providerRequester, ConsumptionAggregator consumptionAggregator) {
@@ -40,6 +40,7 @@ public class ProviderPoller {
     @Scheduled(fixedRate = 10000)
     public void pollAndAggregate() {
         this.setConsumptionPeriod();
+
         providerRequester.request(1L, this.getConsumptionPeriodStart(), this.getConsumptionPeriodEnd())
                 .thenAccept(consumptions -> this.consumptionAggregator.aggregate(
                         consumptions,
@@ -64,7 +65,7 @@ public class ProviderPoller {
     }
 
     public void setConsumptionPeriod() {
-        this.setConsumptionPeriodStart(this.getConsumptionPeriodEnd());
-        this.setConsumptionPeriodEnd(LocalDateTime.now());
+        this.setConsumptionPeriodStart(LocalDateTime.now().minusMinutes(10));
+        this.setConsumptionPeriodEnd(LocalDateTime.now().minusMinutes(5));
     }
 }
