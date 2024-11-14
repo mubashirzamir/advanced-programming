@@ -55,7 +55,7 @@ public class ProviderRequester {
     }
 
     public String buildUri(Long providerId, LocalDateTime periodStart, LocalDateTime periodEnd) {
-        return UriComponentsBuilder.fromUri(URI.create("http://" + this.gatewayUrl + "/provider" + "/" + providerId + "/consumptions"))
+        return UriComponentsBuilder.fromUri(URI.create(this.gatewayUrl + "/provider" + "/" + providerId + "/consumptions"))
                 .queryParam("consumptionPeriodStart", periodStart.toString())
                 .queryParam("consumptionPeriodEnd", periodEnd.toString())
                 .toUriString();

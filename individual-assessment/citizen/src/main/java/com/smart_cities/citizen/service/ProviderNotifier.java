@@ -27,7 +27,7 @@ public class ProviderNotifier {
     @Async
     public void notify(Map<String, Object> reading, Long providerId) {
         try {
-            String providerUrl = "http://" + this.gatewayUrl + "/provider" + "/" + providerId + "/consumptions";
+            String providerUrl = this.gatewayUrl + "/provider" + "/" + providerId + "/consumptions";
             ProviderNotifier.logger.info(providerUrl + " Generated: " + reading);
             Object response = this.restTemplate.postForObject(providerUrl, reading, String.class);
             ProviderNotifier.logger.info("Provider Response: " + response.toString());
