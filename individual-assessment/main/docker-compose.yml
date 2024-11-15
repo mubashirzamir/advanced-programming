@@ -1,117 +1,124 @@
 services:
-
   citizen-db:
-    image: 'postgres:latest'
+    image: "postgres:latest"
     environment:
-      - 'POSTGRES_DB=citizen'
-      - 'POSTGRES_PASSWORD=123'
-      - 'POSTGRES_USER=postgres'
+      - "POSTGRES_DB=citizen"
+      - "POSTGRES_PASSWORD=123"
+      - "POSTGRES_USER=postgres"
     volumes:
-      - ../data/citizen:/var/lib/postgresql/data
+      - "../data/citizen:/var/lib/postgresql/data"
     ports:
-      - '5432:5432'
+      - "5432:5432"
     networks:
       - app-network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 5s
+      interval: "10s"
+      timeout: "5s"
       retries: 5
 
   provider-01-db:
-    image: 'postgres:latest'
+    image: "postgres:latest"
     environment:
-      - 'POSTGRES_DB=provider_01'
-      - 'POSTGRES_PASSWORD=123'
-      - 'POSTGRES_USER=postgres'
+      - "POSTGRES_DB=provider_01"
+      - "POSTGRES_PASSWORD=123"
+      - "POSTGRES_USER=postgres"
     volumes:
-      - ../data/provider_01:/var/lib/postgresql/data
+      - "../data/provider_01:/var/lib/postgresql/data"
     ports:
-      - '5433:5432'
+      - "5433:5432"
     networks:
       - app-network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 5s
+      interval: "10s"
+      timeout: "5s"
       retries: 5
 
   provider-02-db:
-    image: 'postgres:latest'
+    image: "postgres:latest"
     environment:
-      - 'POSTGRES_DB=provider_02'
-      - 'POSTGRES_PASSWORD=123'
-      - 'POSTGRES_USER=postgres'
+      - "POSTGRES_DB=provider_02"
+      - "POSTGRES_PASSWORD=123"
+      - "POSTGRES_USER=postgres"
     volumes:
-      - ../data/provider_02:/var/lib/postgresql/data
+      - "../data/provider_02:/var/lib/postgresql/data"
     ports:
-      - '5434:5432'
+      - "5434:5432"
     networks:
       - app-network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 5s
+      interval: "10s"
+      timeout: "5s"
       retries: 5
 
   provider-03-db:
-    image: 'postgres:latest'
+    image: "postgres:latest"
     environment:
-      - 'POSTGRES_DB=provider_03'
-      - 'POSTGRES_PASSWORD=123'
-      - 'POSTGRES_USER=postgres'
+      - "POSTGRES_DB=provider_03"
+      - "POSTGRES_PASSWORD=123"
+      - "POSTGRES_USER=postgres"
     volumes:
-      - ../data/provider_03:/var/lib/postgresql/data
+      - "../data/provider_03:/var/lib/postgresql/data"
     ports:
-      - '5435:5432'
+      - "5435:5432"
     networks:
       - app-network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 5s
+      interval: "10s"
+      timeout: "5s"
       retries: 5
 
   city-db:
-    image: 'postgres:latest'
+    image: "postgres:latest"
     environment:
-      - 'POSTGRES_DB=city'
-      - 'POSTGRES_PASSWORD=123'
-      - 'POSTGRES_USER=postgres'
+      - "POSTGRES_DB=city"
+      - "POSTGRES_PASSWORD=123"
+      - "POSTGRES_USER=postgres"
     volumes:
-      - ../data/city:/var/lib/postgresql/data
+      - "../data/city:/var/lib/postgresql/data"
     ports:
-      - '5436:5432'
+      - "5436:5432"
     networks:
       - app-network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 5s
+      interval: "10s"
+      timeout: "5s"
       retries: 5
 
   gateway:
     build:
-      context: ../gateway
+      context: "../gateway"
     environment:
-      - PROVIDER_01_ROUTE_URI=http://provider-01:9081
-      - PROVIDER_02_ROUTE_URI=http://provider-02:9081
-      - PROVIDER_03_ROUTE_URI=http://provider-03:9081
-    ports:
-      - "8081:8081"
+      - "PROVIDER_01_ROUTE_URI=http://provider-01:9081"
+      - "PROVIDER_02_ROUTE_URI=http://provider-02:9081"
+      - "PROVIDER_03_ROUTE_URI=http://provider-03:9081"
+    networks:
+      - app-network
 
   citizen:
     build:
-      context: ../citizen
+      context: "../citizen"
     ports:
       - "8082:8082"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://citizen-db:5432/citizen
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=123
-      - SPRING.JPA.HIBERNATE.DDL-AUTO=create-drop
-      - GATEWAY_URL=http://gateway:8081
+      - "SPRING_DATASOURCE_URL=jdbc:postgresql://citizen-db:5432/citizen"
+      - "SPRING_DATASOURCE_USERNAME=postgres"
+      - "SPRING_DATASOURCE_PASSWORD=123"
+      - "SPRING.JPA.HIBERNATE.DDL-AUTO=create-drop"
+      - "GATEWAY_URL=http://gateway:8081"
     depends_on:
+      provider-01:
+        condition: service_healthy
+      provider-02:
+        condition: service_healthy
+      provider-03:
+        condition: service_healthy
+      gateway:
+        condition: service_healthy
       citizen-db:
         condition: service_healthy
     networks:
@@ -119,15 +126,15 @@ services:
 
   provider-01:
     build:
-      context: ../provider
+      context: "../provider"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://provider-01-db:5432/provider_01
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=123
-      - SPRING.JPA.HIBERNATE.DDL-AUTO=create-drop
-      - ID=1
+      - "SPRING_DATASOURCE_URL=jdbc:postgresql://provider-01-db:5432/provider_01"
+      - "SPRING_DATASOURCE_USERNAME=postgres"
+      - "SPRING_DATASOURCE_PASSWORD=123"
+      - "SPRING.JPA.HIBERNATE.DDL-AUTO=create-drop"
+      - "ID=1"
     ports:
-      - '9081:9081'
+      - "9081:9081"
     depends_on:
       provider-01-db:
         condition: service_healthy
@@ -136,15 +143,15 @@ services:
 
   provider-02:
     build:
-      context: ../provider
+      context: "../provider"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://provider-02-db:5432/provider_02
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=123
-      - SPRING.JPA.HIBERNATE.DDL-AUTO=create-drop
-      - ID=2
+      - "SPRING_DATASOURCE_URL=jdbc:postgresql://provider-02-db:5432/provider_02"
+      - "SPRING_DATASOURCE_USERNAME=postgres"
+      - "SPRING_DATASOURCE_PASSWORD=123"
+      - "SPRING.JPA.HIBERNATE.DDL-AUTO=create-drop"
+      - "ID=2"
     ports:
-      - '9082:9081'
+      - "9082:9081"
     depends_on:
       provider-02-db:
         condition: service_healthy
@@ -153,15 +160,15 @@ services:
 
   provider-03:
     build:
-      context: ../provider
+      context: "../provider"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://provider-03-db:5432/provider_03
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=123
-      - SPRING.JPA.HIBERNATE.DDL-AUTO=create-drop
-      - ID=3
+      - "SPRING_DATASOURCE_URL=jdbc:postgresql://provider-03-db:5432/provider_03"
+      - "SPRING_DATASOURCE_USERNAME=postgres"
+      - "SPRING_DATASOURCE_PASSWORD=123"
+      - "SPRING.JPA.HIBERNATE.DDL-AUTO=create-drop"
+      - "ID=3"
     ports:
-      - '9083:9081'
+      - "9083:9081"
     depends_on:
       provider-03-db:
         condition: service_healthy
@@ -170,16 +177,24 @@ services:
 
   city:
     build:
-      context: ../city
+      context: "../city"
     ports:
       - "8083:8083"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://city-db:5432/city
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=123
-      - SPRING.JPA.HIBERNATE.DDL-AUTO=create-drop
-      - GATEWAY_URL=http://gateway:8081
+      - "SPRING_DATASOURCE_URL=jdbc:postgresql://city-db:5432/city"
+      - "SPRING_DATASOURCE_USERNAME=postgres"
+      - "SPRING_DATASOURCE_PASSWORD=123"
+      - "SPRING.JPA.HIBERNATE.DDL-AUTO=create-drop"
+      - "GATEWAY_URL=http://gateway:8081"
     depends_on:
+      provider-01:
+        condition: service_healthy
+      provider-02:
+        condition: service_healthy
+      provider-03:
+        condition: service_healthy
+      gateway:
+        condition: service_healthy
       city-db:
         condition: service_healthy
     networks:
