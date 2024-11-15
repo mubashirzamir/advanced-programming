@@ -117,8 +117,6 @@ services:
         condition: service_healthy
       provider-03:
         condition: service_healthy
-      gateway:
-        condition: service_healthy
       citizen-db:
         condition: service_healthy
     networks:
@@ -192,8 +190,6 @@ services:
       provider-02:
         condition: service_healthy
       provider-03:
-        condition: service_healthy
-      gateway:
         condition: service_healthy
       city-db:
         condition: service_healthy
