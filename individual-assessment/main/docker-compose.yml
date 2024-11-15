@@ -111,12 +111,6 @@ services:
       - "SPRING.JPA.HIBERNATE.DDL-AUTO=create-drop"
       - "GATEWAY_URL=http://gateway:8081"
     depends_on:
-      provider-01:
-        condition: service_healthy
-      provider-02:
-        condition: service_healthy
-      provider-03:
-        condition: service_healthy
       citizen-db:
         condition: service_healthy
     networks:
@@ -185,12 +179,6 @@ services:
       - "SPRING.JPA.HIBERNATE.DDL-AUTO=create-drop"
       - "GATEWAY_URL=http://gateway:8081"
     depends_on:
-      provider-01:
-        condition: service_healthy
-      provider-02:
-        condition: service_healthy
-      provider-03:
-        condition: service_healthy
       city-db:
         condition: service_healthy
     networks:
