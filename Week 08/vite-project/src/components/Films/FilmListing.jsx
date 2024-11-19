@@ -1,4 +1,5 @@
 import Film from './Film.jsx'
+import PropTypes from 'prop-types'
 
 const FilmListing = ({films}) => {
     return <div>
@@ -7,6 +8,15 @@ const FilmListing = ({films}) => {
             return <Film key={film.id} {...film}/>
         })}
     </div>
+}
+
+FilmListing.propTypes = {
+    films: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        title: PropTypes.string.isRequired,
+        description: PropTypes.string.isRequired,
+        rating: PropTypes.number.isRequired
+    })).isRequired
 }
 
 export default FilmListing

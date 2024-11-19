@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 const Multiplier = ({multiple}) => {
     const xTimesY = (x, y) => x * y
 
@@ -9,6 +11,10 @@ const Multiplier = ({multiple}) => {
             ))}
         </ol>
     </div>
+}
+
+Multiplier.propTypes = {
+    multiple: PropTypes.number.isRequired
 }
 
 export default Multiplier

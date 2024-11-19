@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 const Film = ({title, description, rating, category}) => {
     return <div className="container">
         <h1>{title}</h1>
@@ -7,6 +9,13 @@ const Film = ({title, description, rating, category}) => {
             <li>Rating: {rating}</li>
         </ul>
     </div>
+}
+
+Film.propTypes = {
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    rating: PropTypes.number.isRequired,
+    category: PropTypes.string.isRequired
 }
 
 export default Film
