@@ -33,8 +33,13 @@ public class ConsumptionFilter implements Specification<Consumption> {
 
     /**
      * Responsible for applying filters to findAll method.
-     * Applies consumptionPeriodStart filter.
-     * Applies consumptionPeriodEnd filter.
+     *
+     * 1. Applies consumptionPeriodStart filter.
+     * 2. Applies consumptionPeriodEnd filter.
+     *
+     * @param root  The root of the query.
+     * @param query The query.
+     * @param cb    The criteria builder.
      */
     @Override
     public Predicate toPredicate(Root<Consumption> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
