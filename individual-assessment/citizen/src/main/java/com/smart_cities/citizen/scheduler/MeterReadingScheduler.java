@@ -43,6 +43,10 @@ public class MeterReadingScheduler {
         this.setMeters(this.meterRepository.findAll());
     }
 
+    /**
+     * Generates readings for all smart meters and notifies the provider.
+     * The readings are generated every 10 seconds.
+     */
     @Scheduled(fixedRate = 10000)
     public void generateAndNotify() {
         for (Meter meter : this.getMeters()) {
