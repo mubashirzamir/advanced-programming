@@ -37,7 +37,7 @@ public class ProviderPoller {
         this.consumptionPeriodEnd = consumptionPeriodEnd;
     }
 
-    @Scheduled(fixedRate = 30000)
+    @Scheduled(fixedRate = 60000)
     public void pollAndAggregate() {
         this.setConsumptionPeriod();
 
