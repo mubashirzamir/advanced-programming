@@ -43,7 +43,7 @@ public class MeterReadingScheduler {
         this.setMeters(this.meterRepository.findAll());
     }
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 10000)
     public void generateAndNotify() {
         for (Meter meter : this.getMeters()) {
             this.providerNotifier.notify(

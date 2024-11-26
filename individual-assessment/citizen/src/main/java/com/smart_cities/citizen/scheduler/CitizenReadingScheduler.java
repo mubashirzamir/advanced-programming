@@ -43,7 +43,7 @@ public class CitizenReadingScheduler {
         this.setCitizens(this.citizenRepository.findAll());
     }
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 10000)
     public void generateAndNotify() {
         for (Citizen citizen : this.getCitizens()) {
             this.providerNotifier.notify(

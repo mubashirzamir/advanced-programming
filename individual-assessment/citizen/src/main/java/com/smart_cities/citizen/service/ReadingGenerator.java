@@ -7,6 +7,6 @@ import java.util.concurrent.ThreadLocalRandom;
 @Component
 public class ReadingGenerator {
     public Long generate(Long lastReading) {
-        return ThreadLocalRandom.current().nextLong(lastReading, lastReading + 10);
+        return ThreadLocalRandom.current().nextLong(lastReading, lastReading + 5);
     }
 }
