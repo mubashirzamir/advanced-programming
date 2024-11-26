@@ -19,6 +19,9 @@ public class ReadingService {
 
     /**
      * Generates a new reading for the given entity e.g. Citizen or Meter.
+     *
+     * @param entity The entity for which to generate a reading.
+     * @return The generated reading.
      */
     public Reading generateReading(IsAbleToCreateReadings entity) {
         Long entityId = entity.getId();
