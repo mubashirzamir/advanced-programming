@@ -28,7 +28,7 @@ public class ProviderNotifier {
      * Notifies the provider with the reading data.
      *
      * @param reading    The reading data.
-     * @param providerId The ID of the provider.
+     * @param providerId The ID of the provider to notify.
      */
     @Async
     public void notify(Map<String, Object> reading, Long providerId) {

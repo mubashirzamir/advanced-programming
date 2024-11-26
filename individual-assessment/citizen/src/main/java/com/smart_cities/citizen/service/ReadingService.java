@@ -17,6 +17,9 @@ public class ReadingService {
         this.readingGenerator = readingGenerator;
     }
 
+    /**
+     * Generates a new reading for the given entity e.g. Citizen or Meter.
+     */
     public Reading generateReading(IsAbleToCreateReadings entity) {
         Long entityId = entity.getId();
         String entityType = entity.getType();

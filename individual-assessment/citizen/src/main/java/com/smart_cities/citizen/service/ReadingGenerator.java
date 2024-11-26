@@ -6,6 +6,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 public class ReadingGenerator {
+    /**
+     * Generates a new reading that is greater than the last reading.
+     */
     public Long generate(Long lastReading) {
         return ThreadLocalRandom.current().nextLong(lastReading, lastReading + 5);
     }
