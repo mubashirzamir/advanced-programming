@@ -31,6 +31,11 @@ public class ConsumptionFilter implements Specification<Consumption> {
         this.consumptionPeriodEnd = consumptionPeriodEnd;
     }
 
+    /**
+     * Responsible for applying filters to findAll method.
+     * Applies consumptionPeriodStart filter.
+     * Applies consumptionPeriodEnd filter.
+     */
     @Override
     public Predicate toPredicate(Root<Consumption> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
         ArrayList<Predicate> predicates = new ArrayList<>();
