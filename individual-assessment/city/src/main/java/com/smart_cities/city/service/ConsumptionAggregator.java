@@ -16,6 +16,11 @@ public class ConsumptionAggregator {
         this.aggregatedConsumptionRepository = aggregatedConsumptionRepository;
     }
 
+    /**
+     * Aggregates the consumption data.
+     * The aggregation is done by calculating the total and average consumption.
+     * The aggregated data is then saved to the database.
+     */
     public final void aggregate(
             List<Consumption> consumptions,
             Long providerId,

@@ -30,6 +30,14 @@ public class ProviderRequester {
         this.restTemplate = restTemplate;
     }
 
+    /**
+     * Requests the consumption data from the provider.
+     *
+     * @param providerId  The ID of the provider.
+     * @param periodStart The start of the period.
+     * @param periodEnd   The end of the period.
+     * @return CompletableFuture<List < Consumption>> The list of consumption data.
+     */
     @Async
     public CompletableFuture<List<Consumption>> request(
             Long providerId,
@@ -54,6 +62,10 @@ public class ProviderRequester {
         return CompletableFuture.completedFuture(List.of());
     }
 
+    /**
+     * Builds the URI for the request.
+     * The URI is built using the gateway URL, provider ID, and the period start and end.
+     */
     public String buildUri(Long providerId, LocalDateTime periodStart, LocalDateTime periodEnd) {
         return UriComponentsBuilder.fromUri(URI.create(this.gatewayUrl + "/provider" + "/" + providerId + "/consumptions"))
                 .queryParam("consumptionPeriodStart", periodStart.toString())

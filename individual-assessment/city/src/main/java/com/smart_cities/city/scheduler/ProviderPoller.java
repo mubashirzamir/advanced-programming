@@ -37,7 +37,11 @@ public class ProviderPoller {
         this.consumptionPeriodEnd = consumptionPeriodEnd;
     }
 
-    @Scheduled(fixedRate = 60000)
+    /**
+     * Polls the providers for the consumption data and aggregates it.
+     * The polling is done every 2 minutes.
+     */
+    @Scheduled(fixedRate = 120000)
     public void pollAndAggregate() {
         this.setConsumptionPeriod();
 
@@ -64,8 +68,11 @@ public class ProviderPoller {
                 );
     }
 
+    /**
+     * Sets the consumption period to the last 2 minutes.
+     */
     public void setConsumptionPeriod() {
-        this.setConsumptionPeriodStart(LocalDateTime.now().minusMinutes(10));
-        this.setConsumptionPeriodEnd(LocalDateTime.now().minusMinutes(5));
+        this.setConsumptionPeriodStart(LocalDateTime.now().minusMinutes(4));
+        this.setConsumptionPeriodEnd(LocalDateTime.now().minusMinutes(2));
     }
 }
