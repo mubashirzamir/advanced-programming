@@ -14,7 +14,7 @@ const Film = ({title, description, rating, category}) => {
 Film.propTypes = {
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    rating: PropTypes.number.isRequired,
+    rating: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired
 }
 

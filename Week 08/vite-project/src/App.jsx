@@ -1,37 +1,30 @@
 import './App.css'
-import FilmListing from './components/Films/FilmListing.jsx'
-import MultiplierListing from './components/Multiples/MultiplierListing.jsx'
+import FilmListing from './pages/Films/FilmListing.jsx'
+import Home from './pages/Home/Home.jsx'
+import {Route, Routes} from 'react-router-dom'
+import MultiplierListing from './pages/Multiples/MultiplierListing.jsx'
+import NotFound from './pages/NotFound/NotFound.jsx'
+import ActorListing from './pages/Actors/ActorListing.jsx'
+import Menu from './components/Menu/Menu.jsx'
+import FirstExample from './pages/FirstExample/FirstExample.jsx'
+import SecondExample from './pages/SecondExample/SecondExample.jsx'
+import Footer from './components/Footer/Footer.jsx'
 
 const App = () => {
     return <>
-        <FilmListing
-            films={[
-                {
-                    id: 1,
-                    title: 'The Shawshank Redemption',
-                    description: 'Andy Dufresne, a successful banker, is arrested for the murders of his wife and her lover, and is sentenced to life imprisonment at the Shawshank prison. He becomes the most unconventional prisoner.',
-                    rating: 'R',
-                    category: 'Thriller'
-                },
-                {
-                    id: 2,
-                    title: 'The Godfather',
-                    description: 'The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.',
-                    rating: 'R',
-                    category: 'Crime'
-                },
-                {
-                    id: 3,
-                    title: 'The Dark Knight',
-                    description: 'When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.',
-                    rating: 'PG-13',
-                    category: 'Action'
-                }
-            ]}
-        />
-        <MultiplierListing
-            multiples={Array.from({length: 12}, (_, i) => i + 1)}
-        />
+        <div className="app">
+            <Menu/>
+            <Routes>
+                <Route path="/" element={<Home/>}/>
+                <Route path="/films" element={<FilmListing/>}/>
+                <Route path="/actors" element={<ActorListing/>}/>
+                <Route path="/multipliers" element={<MultiplierListing/>}/>
+                <Route path="/example" element={<FirstExample/>}/>
+                <Route path="/second-example" element={<SecondExample/>}/>
+                <Route path="/*" element={<NotFound/>}/>
+            </Routes>
+            <Footer/>
+        </div>
     </>
 }
 export default App
