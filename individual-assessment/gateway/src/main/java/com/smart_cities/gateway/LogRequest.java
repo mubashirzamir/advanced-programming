@@ -13,6 +13,9 @@ public class LogRequest implements GlobalFilter {
 
     private static final Logger log = LoggerFactory.getLogger(LogRequest.class);
 
+    /**
+     * Logs the incoming request.
+     */
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         String method = exchange.getRequest().getMethod().name();
         String path = exchange.getRequest().getURI().getPath();

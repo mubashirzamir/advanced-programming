@@ -40,7 +40,10 @@ public class GatewayApplication {
                 .build();
     }
 
-
+    /**
+     * Strips the prefix i.e. the two segments of the URI /provider/{id}
+     * Sets the circuit breaker to forward to the fallback URI /fallback
+     */
     public static Function<GatewayFilterSpec, UriSpec> applyDefaultRouteFilters() {
         return f -> f.stripPrefix(2)
                 .circuitBreaker((config -> config.setFallbackUri("forward:/fallback")));
