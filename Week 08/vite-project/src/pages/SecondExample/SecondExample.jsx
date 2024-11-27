@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react'
-import Select from '../../components/Select/Select.jsx'
+import Select from '@/components/Select/Select.jsx'
 
 const movieList = [
     {'title': 'Cat Coneheads', 'length': 112, 'category': 'Sci-Fi', 'language': 'English'},
