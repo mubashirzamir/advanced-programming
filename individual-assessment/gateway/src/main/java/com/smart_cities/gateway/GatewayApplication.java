@@ -9,7 +9,9 @@ import org.springframework.cloud.gateway.route.builder.GatewayFilterSpec;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.cloud.gateway.route.builder.UriSpec;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
 
 import java.util.function.Function;
 
@@ -38,6 +40,11 @@ public class GatewayApplication {
                         .filters(GatewayApplication.applyDefaultRouteFilters())
                         .uri(uriConfiguration.getProvider03()))
                 .build();
+    }
+
+    @RequestMapping("/fallback")
+    public Mono<String> fallback() {
+        return Mono.just("Service is currently unavailable");
     }
 
     /**
