@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @SpringBootTest
-@AutoConfigureMockMvc
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) // deactivate the default behaviour
 @Testcontainers
 class ConsumptionRepositoryTest {
