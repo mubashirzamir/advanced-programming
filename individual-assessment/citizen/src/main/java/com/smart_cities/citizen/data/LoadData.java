@@ -18,12 +18,18 @@ public class LoadData {
     @Bean
     CommandLineRunner initDatabase(CitizenRepository citizenRepository, MeterRepository meterRepository) {
         return args -> {
+            if (citizenRepository.count() > 0) {
+                return;
+            }
             for (long i = 0; i < 100; i++) {
                 log.info("Preloading " + citizenRepository.save(new Citizen(1L)));
                 log.info("Preloading " + citizenRepository.save(new Citizen(2L)));
                 log.info("Preloading " + citizenRepository.save(new Citizen(3L)));
             }
 
+            if (meterRepository.count() > 0) {
+                return;
+            }
             for (long i = 0; i < 50; i++) {
                 log.info("Preloading " + meterRepository.save(new Meter(1L)));
                 log.info("Preloading " + meterRepository.save(new Meter(2L)));
