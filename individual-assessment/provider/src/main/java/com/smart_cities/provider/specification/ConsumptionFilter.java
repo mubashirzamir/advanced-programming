@@ -46,11 +46,11 @@ public class ConsumptionFilter implements Specification<Consumption> {
         ArrayList<Predicate> predicates = new ArrayList<>();
 
         if (!ObjectUtils.isEmpty(this.getConsumptionPeriodStart())) {
-            predicates.add(cb.greaterThan(root.get("generatedAt"), this.getConsumptionPeriodStart()));
+            predicates.add(cb.greaterThanOrEqualTo(root.get("generatedAt"), this.getConsumptionPeriodStart()));
         }
 
         if (!ObjectUtils.isEmpty(this.getConsumptionPeriodEnd())) {
-            predicates.add(cb.lessThan(root.get("generatedAt"), this.getConsumptionPeriodEnd()));
+            predicates.add(cb.lessThanOrEqualTo(root.get("generatedAt"), this.getConsumptionPeriodEnd()));
         }
 
         return predicates.size() <= 0 ? null : cb.and(predicates.toArray(new Predicate[predicates.size()]));
