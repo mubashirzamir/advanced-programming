@@ -108,7 +108,7 @@ services:
       - "SPRING_DATASOURCE_URL=jdbc:postgresql://citizen-db:5432/citizen"
       - "SPRING_DATASOURCE_USERNAME=postgres"
       - "SPRING_DATASOURCE_PASSWORD=123"
-      - "SPRING.JPA.HIBERNATE.DDL-AUTO=create"
+      - "SPRING.JPA.HIBERNATE.DDL-AUTO=create-drop"
       - "GATEWAY_URL=http://gateway:8081"
     depends_on:
       citizen-db:
@@ -123,7 +123,7 @@ services:
       - "SPRING_DATASOURCE_URL=jdbc:postgresql://provider-01-db:5432/provider_01"
       - "SPRING_DATASOURCE_USERNAME=postgres"
       - "SPRING_DATASOURCE_PASSWORD=123"
-      - "SPRING.JPA.HIBERNATE.DDL-AUTO=create"
+      - "SPRING.JPA.HIBERNATE.DDL-AUTO=create-drop"
       - "ID=1"
     ports:
       - "9081:9081"
@@ -140,7 +140,7 @@ services:
       - "SPRING_DATASOURCE_URL=jdbc:postgresql://provider-02-db:5432/provider_02"
       - "SPRING_DATASOURCE_USERNAME=postgres"
       - "SPRING_DATASOURCE_PASSWORD=123"
-      - "SPRING.JPA.HIBERNATE.DDL-AUTO=create"
+      - "SPRING.JPA.HIBERNATE.DDL-AUTO=create-drop"
       - "ID=2"
     ports:
       - "9082:9081"
@@ -157,7 +157,7 @@ services:
       - "SPRING_DATASOURCE_URL=jdbc:postgresql://provider-03-db:5432/provider_03"
       - "SPRING_DATASOURCE_USERNAME=postgres"
       - "SPRING_DATASOURCE_PASSWORD=123"
-      - "SPRING.JPA.HIBERNATE.DDL-AUTO=create"
+      - "SPRING.JPA.HIBERNATE.DDL-AUTO=create-drop"
       - "ID=3"
     ports:
       - "9083:9081"
@@ -176,7 +176,7 @@ services:
       - "SPRING_DATASOURCE_URL=jdbc:postgresql://city-db:5432/city"
       - "SPRING_DATASOURCE_USERNAME=postgres"
       - "SPRING_DATASOURCE_PASSWORD=123"
-      - "SPRING.JPA.HIBERNATE.DDL-AUTO=create"
+      - "SPRING.JPA.HIBERNATE.DDL-AUTO=create-drop"
       - "GATEWAY_URL=http://gateway:8081"
     depends_on:
       city-db:
