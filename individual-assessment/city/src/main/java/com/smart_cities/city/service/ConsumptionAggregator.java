@@ -18,8 +18,17 @@ public class ConsumptionAggregator {
 
     /**
      * Aggregates the consumption data.
+     * <p>
+     * The aggregation is done for each provider individually instead of for all providers so that if a request to
+     * one provider fails, we can still get accurate data from the other providers for that interval. The idea being
+     * that, we can further aggregate the data from all providers by using custom queries.
+     * <p>
      * The aggregation is done by calculating the total and average consumption.
-     * The aggregated data is then saved to the database.
+     *
+     * @param consumptions   The list of consumption data.
+     * @param providerId     The ID of the provider.
+     * @param periodStart    The start of the consumption period.
+     * @param periodEnd      The end of the consumption period.
      */
     public final void aggregate(
             List<Consumption> consumptions,
