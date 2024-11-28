@@ -7,7 +7,6 @@ services:
       - "POSTGRES_USER=postgres"
     volumes:
       - "../data/citizen:/var/lib/postgresql/data"
-      - "../ddl-scripts/citizen:/docker-entrypoint-initdb.d"
     ports:
       - "5432:5432"
     networks:
@@ -26,7 +25,6 @@ services:
       - "POSTGRES_USER=postgres"
     volumes:
       - "../data/provider_01:/var/lib/postgresql/data"
-      - "../ddl-scripts/provider:/docker-entrypoint-initdb.d"
     ports:
       - "5433:5432"
     networks:
@@ -45,7 +43,6 @@ services:
       - "POSTGRES_USER=postgres"
     volumes:
       - "../data/provider_02:/var/lib/postgresql/data"
-      - "../ddl-scripts/provider:/docker-entrypoint-initdb.d"
     ports:
       - "5434:5432"
     networks:
@@ -64,7 +61,6 @@ services:
       - "POSTGRES_USER=postgres"
     volumes:
       - "../data/provider_03:/var/lib/postgresql/data"
-      - "../ddl-scripts/provider:/docker-entrypoint-initdb.d"
     ports:
       - "5435:5432"
     networks:
@@ -83,7 +79,6 @@ services:
       - "POSTGRES_USER=postgres"
     volumes:
       - "../data/city:/var/lib/postgresql/data"
-      - "../ddl-scripts/city:/docker-entrypoint-initdb.d"
     ports:
       - "5436:5432"
     networks:
@@ -113,7 +108,7 @@ services:
       - "SPRING_DATASOURCE_URL=jdbc:postgresql://citizen-db:5432/citizen"
       - "SPRING_DATASOURCE_USERNAME=postgres"
       - "SPRING_DATASOURCE_PASSWORD=123"
-      - "SPRING.JPA.HIBERNATE.DDL-AUTO=none"
+      - "SPRING.JPA.HIBERNATE.DDL-AUTO=create"
       - "GATEWAY_URL=http://gateway:8081"
     depends_on:
       citizen-db:
@@ -128,7 +123,7 @@ services:
       - "SPRING_DATASOURCE_URL=jdbc:postgresql://provider-01-db:5432/provider_01"
       - "SPRING_DATASOURCE_USERNAME=postgres"
       - "SPRING_DATASOURCE_PASSWORD=123"
-      - "SPRING.JPA.HIBERNATE.DDL-AUTO=none"
+      - "SPRING.JPA.HIBERNATE.DDL-AUTO=create"
       - "ID=1"
     ports:
       - "9081:9081"
@@ -145,7 +140,7 @@ services:
       - "SPRING_DATASOURCE_URL=jdbc:postgresql://provider-02-db:5432/provider_02"
       - "SPRING_DATASOURCE_USERNAME=postgres"
       - "SPRING_DATASOURCE_PASSWORD=123"
-      - "SPRING.JPA.HIBERNATE.DDL-AUTO=none"
+      - "SPRING.JPA.HIBERNATE.DDL-AUTO=create"
       - "ID=2"
     ports:
       - "9082:9081"
@@ -162,7 +157,7 @@ services:
       - "SPRING_DATASOURCE_URL=jdbc:postgresql://provider-03-db:5432/provider_03"
       - "SPRING_DATASOURCE_USERNAME=postgres"
       - "SPRING_DATASOURCE_PASSWORD=123"
-      - "SPRING.JPA.HIBERNATE.DDL-AUTO=none"
+      - "SPRING.JPA.HIBERNATE.DDL-AUTO=create"
       - "ID=3"
     ports:
       - "9083:9081"
@@ -181,7 +176,7 @@ services:
       - "SPRING_DATASOURCE_URL=jdbc:postgresql://city-db:5432/city"
       - "SPRING_DATASOURCE_USERNAME=postgres"
       - "SPRING_DATASOURCE_PASSWORD=123"
-      - "SPRING.JPA.HIBERNATE.DDL-AUTO=none"
+      - "SPRING.JPA.HIBERNATE.DDL-AUTO=create"
       - "GATEWAY_URL=http://gateway:8081"
     depends_on:
       city-db:
